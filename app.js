@@ -62,7 +62,7 @@ registerListeners(boltApp);
 persistedClient.client = boltApp.client;
 
 // Use global middleware to fetch Salesforce Authentication details
-boltApp.use(authWithSalesforce);
+// boltApp.use(authWithSalesforce);
 
 boltApp.shortcut('who_am_i', async ({ shortcut, ack, client, logger }) => {
 

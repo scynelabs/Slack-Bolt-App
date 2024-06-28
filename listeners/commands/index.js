@@ -223,5 +223,5 @@ const captureNotesCommand = async ({ ack, body, client, logger }) => {
 module.exports.register = (app) => {
     app.command('/view_injured_worker', injuredWorkerCommand);
     app.command('/view_care_plan', carePlanViewCommand);
-    app.command('/capture_notes', captureNotesCommand);
+    // app.command('/capture_notes', captureNotesCommand);
 };

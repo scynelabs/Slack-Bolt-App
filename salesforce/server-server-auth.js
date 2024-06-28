@@ -6,6 +6,8 @@ const { getToken } = require('sf-jwt-token');
 class ServerToServerAuth {
     constructor(config) {
         this.config = config;
+
+        console.log('ServerToServerAuth config ==>', JSON.stringify(config))
     }
 
     async connect() {
@@ -22,6 +24,8 @@ class ServerToServerAuth {
                 aud: this.config.loginUrl,
                 privateKey: this.config.privateKey
             });
+
+            console.log('ServerToServerAuth jwtResponse:getToken ==>', JSON.stringify(jwtResponse))
 
             // Initialize connection
             this.conn.initialize({

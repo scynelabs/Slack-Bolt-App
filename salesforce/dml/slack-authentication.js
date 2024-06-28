@@ -4,6 +4,9 @@ const config = require('../../config/config');
 
 const upsert = async (connection, slackUserId, salesforceUserId) => {
     try {
+
+        console.log('upsert ==>', JSON.stringify({connection, slackUserId, salesforceUserId}))
+
         const encryptedAccessToken = CryptoJS.AES.encrypt(
             connection.accessToken,
             config.slack.aesKey
@@ -12,6 +15,8 @@ const upsert = async (connection, slackUserId, salesforceUserId) => {
             connection.refreshToken,
             config.slack.aesKey
         ).toString();
+
+        console.log('upsert ecrypted ==>', JSON.stringify({encryptedAccessToken, encryptedRefreshToken}))
 
         const result = await connection
             .sobject('Slack_Authentication__c')
@@ -24,6 +29,9 @@ const upsert = async (connection, slackUserId, salesforceUserId) => {
                 },
                 'Slack_User_ID__c'
             );
+
+        console.log('upsert result ==>', JSON.stringify({result}))
+
 
         if (!result.success) {
             throw JSON.stringify(result);

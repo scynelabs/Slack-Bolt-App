@@ -5,7 +5,7 @@ const config = require('../../config/config');
 const upsert = async (connection, slackUserId, salesforceUserId) => {
     try {
 
-        console.log('upsert ==>', JSON.stringify({connection, slackUserId, salesforceUserId}))
+        console.log('upsert ==>', {connection, slackUserId, salesforceUserId})
 
         const encryptedAccessToken = CryptoJS.AES.encrypt(
             connection.accessToken,

@@ -2,7 +2,7 @@
 
 const { injuredWorkerView } = require('./injuredWorker');
 const { captureNotes } = require('./captureNotes');
-const { carePlanView } = require('./carePlanView');
+const { carePlanView } = require('./carePlan');
 
 module.exports.register = (app) => {
     app.command('/view_injured_worker', injuredWorkerView);

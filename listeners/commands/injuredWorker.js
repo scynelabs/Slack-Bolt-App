@@ -123,4 +123,4 @@ const injuredWorkerView = {
 
 
 
-module.exports = { injuredWorkerView };
+module.exports = { injuredWorkerView }

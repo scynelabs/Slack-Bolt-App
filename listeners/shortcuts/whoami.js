@@ -8,6 +8,8 @@ const {
 const whoamiCallback = async ({ shortcut, ack, client, context }) => {
     try {
         await ack();
+
+        console.log('shortcut ==> ', {shortcut, context})
         if (context.hasAuthorized) {
             const conn = context.sfconnection;
             const currentuser = await conn.identity();

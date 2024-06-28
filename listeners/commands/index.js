@@ -15,7 +15,7 @@ const injuredWorkerCommand = async ({ ack, body, client, logger }) => {
         // Pass a valid trigger_id within 3 seconds of receiving it
         trigger_id: body.trigger_id,
         // View payload
-        view: injuredWorkerView
+        view: {...injuredWorkerView}
 
         });
         logger.info(result);
@@ -35,7 +35,7 @@ const carePlanViewCommand = async ({ ack, body, client, logger }) => {
         // Pass a valid trigger_id within 3 seconds of receiving it
         trigger_id: body.trigger_id,
         // View payload
-        view: carePlanView
+        view: {...carePlanView}
 
         });
         logger.info(result);
@@ -55,7 +55,7 @@ const captureNotesCommand = async ({ ack, body, client, logger }) => {
         // Pass a valid trigger_id within 3 seconds of receiving it
         trigger_id: body.trigger_id,
         // View payload
-        view: captureNotes
+        view: {...captureNotes}
 
         });
         logger.info(result);

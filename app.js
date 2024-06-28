@@ -96,11 +96,11 @@ boltApp.shortcut('who_am_i', async ({ shortcut, ack, client, logger }) => {
 });
 
 // Defining ExpressReceiver custom routes
-// receiver.router.use(express.json());
-// registerCustomRoutes().forEach((route) => {
-//     const method = route.method[0].toLowerCase();
-//     receiver.router[method](route.path, route.handler);
-// });
+receiver.router.use(express.json());
+registerCustomRoutes().forEach((route) => {
+    const method = route.method[0].toLowerCase();
+    receiver.router[method](route.path, route.handler);
+});
 
 // Register Listeners
 registerListeners(boltApp);
@@ -109,7 +109,7 @@ registerListeners(boltApp);
 persistedClient.client = boltApp.client;
 
 // Use global middleware to fetch Salesforce Authentication details
-// boltApp.use(authWithSalesforce);
+boltApp.use(authWithSalesforce);
 
 // Listen for a slash command invocation
 boltApp.command("/helloworld", async ({ ack, payload, context }) => {

@@ -118,7 +118,7 @@ boltApp.command("/helloworld", async ({ ack, payload, context }) => {
     ack();
   
     try {
-      const result = await app.client.chat.postMessage({
+      const result = await boltApp.client.chat.postMessage({
         token: context.botToken,
         // Channel to send message to
         channel: payload.channel_id,

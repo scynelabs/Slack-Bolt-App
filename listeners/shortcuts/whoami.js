@@ -14,9 +14,12 @@ const whoamiCallback = async ({ shortcut, ack, client, context }) => {
             const conn = context.sfconnection;
             const currentuser = await conn.identity();
             // Call the views.open method using one of the built-in WebClients
+            const whoamiBlocksView = whoAmIResponse(conn.instanceUrl, currentuser.username)
+            console.log('whoamiBlocksView ==>', whoamiBlocksView)
+            
             await client.views.open({
                 trigger_id: shortcut.trigger_id,
-                view: whoAmIResponse(conn.instanceUrl, currentuser.username)
+                view: whoamiBlocksView//whoAmIResponse(conn.instanceUrl, currentuser.username)
             });
         } else {
             // Get BotInfo

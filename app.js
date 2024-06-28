@@ -64,7 +64,47 @@ persistedClient.client = boltApp.client;
 // Use global middleware to fetch Salesforce Authentication details
 boltApp.use(authWithSalesforce);
 
-// Asynchronous function to start the app
+
+// Listen for a slash command invocation
+boltApp.command("/helloworld", async ({ ack, payload, context }) => {
+    console.log("/helloworld listening on.");
+    // Acknowledge the command request
+    ack();
+  
+    try {
+      const result = await app.client.chat.postMessage({
+        token: context.botToken,
+        // Channel to send message to
+        channel: payload.channel_id,
+        // Include a button in the message (or whatever blocks you want!)
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: "Go ahead. Click it.",
+            },
+            accessory: {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "Click me!",
+              },
+              action_id: "button_abc",
+            },
+          },
+        ],
+        // Text in the notification
+        text: "Message from Test App",
+      });
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+  // All the room in the world for your code
+  
+ // Asynchronous function to start the app
 (async () => {
     try {
         // Start your app

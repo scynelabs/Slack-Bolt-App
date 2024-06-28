@@ -1,4 +1,4 @@
-const injuredWorkerView = const view = {
+const injuredWorkerView = {
 	"type": "modal",
 	"title": {
 		"type": "plain_text",

@@ -330,7 +330,7 @@ boltApp.command('/capture_notes', async ({ ack, body, context }) => {
     await ack();
   
     try {
-      const result = await app.client.views.open({
+      const result = await boltApp.client.views.open({
         token: context.botToken,
         // Pass a valid trigger_id within 3 seconds of receiving it
         trigger_id: body.trigger_id,

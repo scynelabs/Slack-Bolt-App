@@ -55,7 +55,9 @@ const captureNotesCommand = async ({ ack, body, client, logger }) => {
             // Pass a valid trigger_id within 3 seconds of receiving it
             trigger_id: body.trigger_id,
             // View payload
-            view: captureNotesView            
+            view: {
+                ...captureNotesView  
+            }          
         });
         logger.info(result);
     }

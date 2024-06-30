@@ -25,6 +25,7 @@ switch (process.env.LOG_LEVEL) {
         logLevel = LogLevel.INFO;
 }
 
+
 // Create custom express app to be able to use express-session middleware
 const app = express();
 app.use(

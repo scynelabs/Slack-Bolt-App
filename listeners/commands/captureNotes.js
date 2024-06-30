@@ -1,4 +1,4 @@
-const captureNotes = {
+const captureNotesView = {
 	"type": "modal",
 	"submit": {
 		"type": "plain_text",
@@ -190,4 +190,4 @@ const captureNotes = {
 	]
 }
 
-module.exports = { captureNotes }
+module.exports = { captureNotesView }

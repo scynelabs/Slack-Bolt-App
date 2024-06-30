@@ -48,16 +48,14 @@ const carePlanViewCommand = async ({ ack, body, client, logger }) => {
 const captureNotesCommand = async ({ ack, body, client, logger }) => {
     // Acknowledge the command request
     await ack();
-  
+    console.log('capture notes view ==>', JSON.stringify(captureNotesView))
     try {
       // Call views.open with the built-in client
       const result = await client.views.open({
             // Pass a valid trigger_id within 3 seconds of receiving it
             trigger_id: body.trigger_id,
             // View payload
-            view: {
-                ...captureNotesView  
-            }          
+            view: captureNotesView         
         });
         logger.info(result);
     }

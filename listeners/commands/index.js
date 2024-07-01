@@ -3,6 +3,7 @@
 const { injuredWorkerView } = require('./injuredWorker');
 const { captureNotesView } = require('./captureNotes');
 const { carePlanView } = require('./carePlan');
+const { channel } = require('slack-block-builder');
 
 
 const injuredWorkerCommand = async ({ ack, body, client, logger }) => {
@@ -66,9 +67,10 @@ const captureNotesCommand = async ({ ack, body, client, logger }) => {
 
 
 const messageHandler = async ({ client, body, say, event, payload, logger }) => {
-  console.log('message event payload', payload)
 
-  const ack = () => new Promise(resolve=> resolve())
+    const { text } = payload
+
+    console.log('message event payload text', text, payload)
   /*
   { user: 'U079T1163ML',
   type: 'message',
@@ -84,7 +86,7 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
   */
 
  
-  const { text } = payload
+  
 
   if(text.indexOf(':face_with_head_bandage:')){
     // show injured worker details
@@ -94,10 +96,10 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
   else if(text.indexOf(':innocent')){
     // show care plan
     await say(carePlanView)
-    
+
   }else if(text.indexOf(':white_check_mark:')){
     // show swarming completed
-    say('swarming will be closed.')
+    await say('swarming will be closed.')
   }
 }
 

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "This is a sample scaffold to help you get started with Slack app integrated to Salesforce",
     "engines": {
-        "node": "16.x"
+        "node": "18.x"
     },
     "scripts": {
         "start": "node app.js",

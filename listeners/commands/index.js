@@ -65,7 +65,7 @@ const captureNotesCommand = async ({ ack, body, client, logger }) => {
 }
 
 
-const messageHandler = async ({ message, ack, body, say, event, payload }) => {
+const messageHandler = async ({ client, ack, body, say, event, payload }) => {
   console.log('message event payload', payload)
 
   /*

@@ -88,16 +88,16 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
  
   
 
-  if(text.indexOf(':face_with_head_bandage:')){
+  if(text.indexOf(':face_with_head_bandage:') != -1){
     // show injured worker details
     await say(injuredWorkerView)
   }
   
-  else if(text.indexOf(':innocent')){
+  else if(text.indexOf(':innocent') != -1){
     // show care plan
     await say(carePlanView)
 
-  }else if(text.indexOf(':white_check_mark:')){
+  }else if(text.indexOf(':white_check_mark:') != -1){
     // show swarming completed
     await say('swarming will be closed.')
   }

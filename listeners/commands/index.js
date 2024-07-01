@@ -68,7 +68,7 @@ const captureNotesCommand = async ({ ack, body, client, logger }) => {
 const messageHandler = async ({ client, body, say, event, payload, logger }) => {
   console.log('message event payload', payload)
 
-  const ack = new Promise(resolve=> resolve())
+  const ack = () => new Promise(resolve=> resolve())
   /*
   { user: 'U079T1163ML',
   type: 'message',

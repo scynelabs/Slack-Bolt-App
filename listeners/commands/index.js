@@ -83,25 +83,18 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
   channel_type: 'channel' }
   */
 
+ 
   const { text } = payload
 
   if(text.indexOf(':face_with_head_bandage:')){
     // show injured worker details
-    injuredWorkerCommand({
-        ack,
-        body,
-        client,
-        logger
-    })
+    await say(injuredWorkerView)
   }
+  
   else if(text.indexOf(':innocent')){
     // show care plan
-    carePlanViewCommand({
-        ack,
-        body,
-        client,
-        logger
-    })
+    await say(carePlanView)
+    
   }else if(text.indexOf(':white_check_mark:')){
     // show swarming completed
     say('swarming will be closed.')

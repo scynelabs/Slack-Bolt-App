@@ -56,6 +56,13 @@ registerCustomRoutes().forEach((route) => {
     receiver.router[method](route.path, route.handler);
 });
 
+
+boltApp.event("message", async ({ message, say, event, payload }) => {
+    console.log("message event 2 received in channel");
+    console.log('message payload', payload)
+    say('message received', payload.text)
+});
+
 // Register Listeners
 registerListeners(boltApp);
 
@@ -65,12 +72,6 @@ persistedClient.client = boltApp.client;
 // Use global middleware to fetch Salesforce Authentication details
 boltApp.use(authWithSalesforce);
 
-
-boltApp.event("message", async ({ message, say, event, payload }) => {
-    console.log("message event 2 received in channel");
-    console.log('message payload', payload)
-    say('message received', payload.text)
-});
 
  // Asynchronous function to start the app
 (async () => {

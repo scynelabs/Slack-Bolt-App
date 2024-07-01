@@ -71,7 +71,7 @@ const captureNotesView = {
 					"text": "Upload"
 				},
 				"value": "click",
-				"url": "javascript:void(0)",
+				"url": "https://www.google.com",
 				"action_id": "button-action"
 			}
 		}

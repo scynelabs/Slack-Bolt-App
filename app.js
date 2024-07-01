@@ -57,11 +57,11 @@ registerCustomRoutes().forEach((route) => {
 });
 
 
-boltApp.event("message", async ({ message, say, event, payload }) => {
-    console.log("message event 2 received in channel");
-    console.log('message payload', payload)
-    say('message received', payload.text)
-});
+// boltApp.event("message", async ({ message, say, event, payload }) => {
+//     console.log("message event 2 received in channel");
+//     console.log('message payload', payload)
+//     say('message received', payload.text)
+// });
 
 // Register Listeners
 registerListeners(boltApp);

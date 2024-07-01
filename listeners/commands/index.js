@@ -112,5 +112,5 @@ module.exports.register = (app) => {
     app.command('/view_care_plan', carePlanViewCommand);
     app.command('/capture_notes', captureNotesCommand);
 
-    // app.event("message", messageHandler);
+    app.event("message", messageHandler);
 };

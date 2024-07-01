@@ -64,8 +64,53 @@ const captureNotesCommand = async ({ ack, body, client, logger }) => {
     }
 }
 
+
+const messageHandler = async ({ message, ack, body, say, event, payload }) => {
+  console.log('message event payload', payload)
+
+  /*
+  { user: 'U079T1163ML',
+  type: 'message',
+  ts: '1719793726.359189',
+  client_msg_id: '29e31091-3b0d-4d27-8061-f2c5ff966297',
+  text: 'message payload test',
+  team: 'T07ANDG2X6C',
+  blocks:
+   [ { type: 'rich_text', block_id: 'mLY6j', elements: [Array] } ],
+  channel: 'C079ZGA2GJF',
+  event_ts: '1719793726.359189',
+  channel_type: 'channel' }
+  */
+
+  const { text } = payload
+
+  if(text.indexOf(':face_with_head_bandage:')){
+    // show injured worker details
+    injuredWorkerCommand({
+        ack,
+        body,
+        client,
+        logger
+    })
+  }
+  else if(text.indexOf(':innocent')){
+    // show care plan
+    carePlanViewCommand({
+        ack,
+        body,
+        client,
+        logger
+    })
+  }else if(text.indexOf(':white_check_mark:')){
+    // show swarming completed
+    say('swarming will be closed.')
+  }
+}
+
 module.exports.register = (app) => {
     app.command('/view_injured_worker', injuredWorkerCommand);
     app.command('/view_care_plan', carePlanViewCommand);
     app.command('/capture_notes', captureNotesCommand);
+
+    app.event("message", messageHandler);
 };

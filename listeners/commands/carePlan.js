@@ -5,14 +5,9 @@ const carePlanView = {
 		"text": "Care Plan",
 		"emoji": true
 	},
-	"submit": {
-		"type": "plain_text",
-		"text": "Submit",
-		"emoji": true
-	},
 	"close": {
 		"type": "plain_text",
-		"text": "Cancel",
+		"text": "Close",
 		"emoji": true
 	},
 	"blocks": [

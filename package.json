@@ -2,6 +2,9 @@
     "name": "salesforce-slack-app",
     "version": "1.0.0",
     "description": "This is a sample scaffold to help you get started with Slack app integrated to Salesforce",
+    "engines": {
+        "node": "16.x"
+    },
     "scripts": {
         "start": "node app.js",
         "test": "jest --no-cache",

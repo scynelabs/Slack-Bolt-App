@@ -2,4 +2,6 @@
 const { authorizationScreen } = require('./authorization-screen');
 const { authorizationSuccessScreen } = require('./auth-success');
 
-module.exports = { authorizationScreen, authorizationSuccessScreen };
+const { homeView } = require('./appHomeView');
+
+module.exports = { authorizationScreen, authorizationSuccessScreen, homeView };

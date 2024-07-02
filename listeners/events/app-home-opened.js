@@ -1,7 +1,8 @@
 'use strict';
 const {
     authorizationScreen,
-    authorizationSuccessScreen
+    authorizationSuccessScreen,
+    homeView
 } = require('../../user-interface/app-home');
 
 const appHomeOpenedCallback = async ({ client, event, context }) => {
@@ -17,7 +18,8 @@ const appHomeOpenedCallback = async ({ client, event, context }) => {
             await client.views.publish({
                 // Use the user ID associated with the event
                 user_id: event.user,
-                view: authorizationSuccessScreen(currentuser.username)
+                view: homeView
+                //view: authorizationSuccessScreen(currentuser.username)
             });
         } else {
             // Call views.publish with the built-in client

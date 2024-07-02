@@ -85,9 +85,6 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
   channel_type: 'channel' }
   */
 
- 
-  
-
   if(text.indexOf(':face_with_head_bandage:') != -1){
     // show injured worker details
     await say(injuredWorkerView)

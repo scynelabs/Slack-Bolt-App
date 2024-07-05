@@ -4,6 +4,8 @@ const { injuredWorkerView } = require('./injuredWorker');
 const { captureNotesView } = require('./captureNotes');
 const { carePlanView } = require('./carePlan');
 const { channel } = require('slack-block-builder');
+const { queryCaseDetail  } = require('../../salesforce/query/cases');
+
 
 
 const injuredWorkerCommand = async ({ ack, body, client, logger }) => {
@@ -46,11 +48,13 @@ const carePlanViewCommand = async ({ ack, body, client, logger }) => {
     }
 }
 
-const captureNotesCommand = async ({ ack, body, client, logger }) => {
+const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
     console.log('capture notes view ==>', JSON.stringify(captureNotesView))
     try {
+
+        await fetchData( { body, context})
       // Call views.open with the built-in client
       const result = await client.views.open({
             // Pass a valid trigger_id within 3 seconds of receiving it
@@ -99,6 +103,29 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
     await say('swarming will be closed.')
   }
 }
+
+const fetchData = async ({ body, context }) => {
+    try {
+        if (context.hasAuthorized) {
+            try {
+                // fetch data
+                // const requestId = body.actions[0].value;
+                const data = await queryCaseDetail(
+                        context.sfconnection,
+                        requestId
+                    );
+                console.log('Case Data ==>', JSON.stringify(data))
+            } catch (e) {
+                throw e;
+            }
+        } else {
+           console.log('SF dis-connection, please authorize')
+        }
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+    }
+};
 
 module.exports.register = (app) => {
     app.command('/view_injured_worker', injuredWorkerCommand);

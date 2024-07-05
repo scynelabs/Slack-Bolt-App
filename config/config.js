@@ -32,7 +32,7 @@ const salesforce = {
     herokuUrl: process.env.HEROKU_URL,
     privateKey: privateKeyBase64Decoded,
     loginUrl: process.env.SF_LOGIN_URL,
-    username: process.env.SF_USERNAME,
+    // username: process.env.SF_USERNAME,
     apiVersion: process.env.SF_API_VERSION || defaultSalesforceApiVersion
 };
 

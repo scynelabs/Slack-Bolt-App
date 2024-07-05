@@ -6,11 +6,11 @@ const {
 } = require('../../user-interface/app-home');
 
 const appHomeOpenedCallback = async ({ client, event, context }) => {
-    if (event.tab !== 'home') {
-        // Ignore the `app_home_opened` event for everything
-        // except for home screen as we don't support a conversational UI
-        return;
-    }
+    // if (event.tab !== 'home') {
+    //     // Ignore the `app_home_opened` event for everything
+    //     // except for home screen as we don't support a conversational UI
+    //     return;
+    // }
     try {
         if (context.hasAuthorized) {
             const conn = context.sfconnection;

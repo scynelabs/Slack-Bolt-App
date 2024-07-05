@@ -78,4 +78,4 @@ const captureNotesView = {
 	]
 }
 
-module.exports = { captureNotesView }
+module.exports = { notesBlocks: captureNotesView.blocks }

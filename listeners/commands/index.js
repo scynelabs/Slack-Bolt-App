@@ -5,7 +5,9 @@ const { captureNotesView } = require('./captureNotes');
 const { carePlanView } = require('./carePlan');
 const { channel } = require('slack-block-builder');
 const { queryCaseDetail  } = require('../../salesforce/query/cases');
-
+const {
+    authorizeSalesforcePrompt,
+} = require('../../user-interface/modals');
 
 
 const injuredWorkerCommand = async ({ ack, body, client, logger }) => {
@@ -54,15 +56,29 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     console.log('capture notes view ==>', JSON.stringify(captureNotesView))
     try {
 
-        await fetchData( { body, context})
-      // Call views.open with the built-in client
-      const result = await client.views.open({
-            // Pass a valid trigger_id within 3 seconds of receiving it
-            trigger_id: body.trigger_id,
-            // View payload
-            view: captureNotesView         
-        });
-        logger.info(result);
+        if(context.hasAuthorized){
+            await fetchData( { body, context, logger})
+            // Call views.open with the built-in client
+            const result = await client.views.open({
+                  // Pass a valid trigger_id within 3 seconds of receiving it
+                  trigger_id: body.trigger_id,
+                  // View payload
+                  view: captureNotesView         
+              });
+              logger.info(result);
+        }else{
+            // Get BotInfo
+            const botInfo = await client.bots.info({ bot: context.botId });
+            // Open a Modal with message to navigate to App Home for authorization
+            await client.views.open({
+                trigger_id: body.trigger_id,
+                view: authorizeSalesforcePrompt(
+                    context.teamId,
+                    botInfo.bot.app_id
+                )
+            });
+        }
+        
     }
     catch (error) {
         logger.error(error);
@@ -104,7 +120,7 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
   }
 }
 
-const fetchData = async ({ body, context }) => {
+const fetchData = async ({ body, context, logger }) => {
     try {
         if (context.hasAuthorized) {
             try {
@@ -114,12 +130,13 @@ const fetchData = async ({ body, context }) => {
                         context.sfconnection,
                         requestId
                     );
-                console.log('Case Data ==>', JSON.stringify(data))
+                console.log('case data ==>')
+                logger.info(data)
             } catch (e) {
                 throw e;
             }
         } else {
-           console.log('SF dis-connection, please authorize')
+        //    console.log('SF dis-connection, please authorize')
         }
     } catch (error) {
         // eslint-disable-next-line no-console

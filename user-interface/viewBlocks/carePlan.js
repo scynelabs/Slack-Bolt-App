@@ -65,4 +65,4 @@ const carePlanView = {
 	]
 }
 
-module.exports = { carePlanView }
+module.exports = { carePlanBlocks: carePlanView.blocks }

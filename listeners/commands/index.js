@@ -62,6 +62,9 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
             console.time("fetch");
             await fetchData( { body, context, logger})
             console.timeEnd("fetch");
+
+            await say(carePlanView)
+            /*
             // Call views.open with the built-in client
             const result = await client.views.open({
                   // Pass a valid trigger_id within 3 seconds of receiving it
@@ -70,6 +73,7 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
                   view: captureNotesView         
               });
               logger.info(result);
+              */
         }else{
             // Get BotInfo
             const botInfo = await client.bots.info({ bot: context.botId });

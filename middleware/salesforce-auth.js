@@ -50,7 +50,7 @@ const authWithSalesforce = async ({
 
     }
 
-    console.log('Executing Salesforce auth middleware slackUser ==>', slackUserId);
+    console.log('Executing Salesforce auth middleware slackUser ==>', slackUserId, context);
 
     try {
         let authInfo = {};

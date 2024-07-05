@@ -129,6 +129,7 @@ const fetchData = async ({ body, context, logger }) => {
                 context.sfconnection,
                 requestId
             );
+        console.log('case data ==>', data)
         return data        
     } catch (error) {
         // eslint-disable-next-line no-console

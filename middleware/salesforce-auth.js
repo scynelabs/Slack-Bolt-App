@@ -26,7 +26,7 @@ const authWithSalesforce = async ({
     body,
     slackUserId
 } = {}) => {
-    console.log('Executing Salesforce auth middleware');
+    console.log('Executing Salesforce auth middleware slackUser ==>', slackUserId, tokenCache);
     if (!slackUserId) {
         // For all events Slack returns the users Id as user.id
         if (payload?.user?.id) {

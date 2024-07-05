@@ -1,20 +1,50 @@
 'use strict';
 
+const { caseDetailsView } = require('./caseDetail');
 const { injuredWorkerView } = require('./injuredWorker');
 const { captureNotesView } = require('./captureNotes');
 const { carePlanView } = require('./carePlan');
 const { channel } = require('slack-block-builder');
-const { queryCaseDetail  } = require('../../salesforce/query/cases');
+const { 
+    queryAllCases,
+    queryCaseDetail, 
+    queryCaseCarePlans,
+    queryCaseInjuredWorker
+} = require('../../salesforce/query/cases');
 const {
     authorizeSalesforcePrompt,
 } = require('../../user-interface/modals');
 
 
-const injuredWorkerCommand = async ({ ack, body, client, logger }) => {
+const viewCaseDetailsCommand = async ({ ack, say, body, client, logger }) => {
     // Acknowledge the command request
     await ack();
   
     try {
+
+        if(context.hasAuthorized){
+            const requestId = ''
+            const data = await queryCaseDetail(
+                context.sfconnection,
+                requestId
+            );  
+            console.log('case data ==>')
+            logger.info(data)
+            say(await caseDetailsView(data))
+
+        }else {
+            // Get BotInfo
+            const botInfo = await client.bots.info({ bot: context.botId });
+            // Open a Modal with message to navigate to App Home for authorization
+            await client.views.open({
+                trigger_id: body.trigger_id,
+                view: authorizeSalesforcePrompt(
+                    context.teamId,
+                    botInfo.bot.app_id
+                )
+            });  
+        }        
+        /*     
       // Call views.open with the built-in client
       const result = await client.views.open({
         // Pass a valid trigger_id within 3 seconds of receiving it
@@ -24,17 +54,87 @@ const injuredWorkerCommand = async ({ ack, body, client, logger }) => {
 
         });
         logger.info(result);
+        */
     }
     catch (error) {
         logger.error(error);
     }
 }
 
-const carePlanViewCommand = async ({ ack, body, client, logger }) => {
+const injuredWorkerCommand = async ({ ack, say, body, client, logger }) => {
     // Acknowledge the command request
     await ack();
   
     try {
+        if(context.hasAuthorized){
+            const requestId = ''
+            const data = await queryCaseInjuredWorker(
+                context.sfconnection,
+                requestId
+            );  
+            
+            say(await injuredWorkerCommand(data))
+            /*
+        // Call views.open with the built-in client
+        const result = await client.views.open({
+            // Pass a valid trigger_id within 3 seconds of receiving it
+            trigger_id: body.trigger_id,
+            // View payload
+            view: {...injuredWorkerView}
+
+            });
+            logger.info(result);
+            */
+
+        }else {
+            // Get BotInfo
+            const botInfo = await client.bots.info({ bot: context.botId });
+            // Open a Modal with message to navigate to App Home for authorization
+            await client.views.open({
+                trigger_id: body.trigger_id,
+                view: authorizeSalesforcePrompt(
+                    context.teamId,
+                    botInfo.bot.app_id
+                )
+            });            
+        }
+    }
+    catch (error) {
+        logger.error(error);
+    }
+}
+
+const carePlanViewCommand = async ({ ack, say, body, client, logger }) => {
+    // Acknowledge the command request
+    await ack();
+  
+    try {
+        // console.log('middleware context ==>', context)
+
+        if(context.hasAuthorized){
+            // console.log('capture notes view ==>', JSON.stringify(captureNotesView))
+
+            const requestId = ''
+            const data = await queryCaseCarePlans(
+                context.sfconnection,
+                requestId
+            );  
+            
+            say(await carePlanView(data))
+
+        }else {
+            // Get BotInfo
+            const botInfo = await client.bots.info({ bot: context.botId });
+            // Open a Modal with message to navigate to App Home for authorization
+            await client.views.open({
+                trigger_id: body.trigger_id,
+                view: authorizeSalesforcePrompt(
+                    context.teamId,
+                    botInfo.bot.app_id
+                )
+            });            
+        }
+        /*
       // Call views.open with the built-in client
       const result = await client.views.open({
         // Pass a valid trigger_id within 3 seconds of receiving it
@@ -44,27 +144,28 @@ const carePlanViewCommand = async ({ ack, body, client, logger }) => {
 
         });
         logger.info(result);
+        */
     }
     catch (error) {
         logger.error(error);
     }
 }
 
-const captureNotesCommand = async ({ ack, say, body, client, logger, context }) => {
+const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
     try {
-        console.log('middleware context ==>', context)
+        // console.log('middleware context ==>', context)
 
         if(context.hasAuthorized){
             console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
-            console.time("fetch");
-            await fetchData( { body, context, logger})
-            console.timeEnd("fetch");
+            // console.time("fetch");
+            // await fetchData( { body, context, logger})
+            // console.timeEnd("fetch");
 
-            await say(carePlanView)
-            /*
+            // await say(carePlanView)
+           
             // Call views.open with the built-in client
             const result = await client.views.open({
                   // Pass a valid trigger_id within 3 seconds of receiving it
@@ -73,7 +174,7 @@ const captureNotesCommand = async ({ ack, say, body, client, logger, context }) 
                   view: captureNotesView         
               });
               logger.info(result);
-              */
+              
         }else{
             // Get BotInfo
             const botInfo = await client.bots.info({ bot: context.botId });
@@ -128,22 +229,8 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
   }
 }
 
-const fetchData = async ({ body, context, logger }) => {
-    try {
-        const requestId = 'case-id';
-        const data = await queryCaseDetail(
-                context.sfconnection,
-                requestId
-            );
-        console.log('case data ==>', data)
-        return data        
-    } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-    }
-};
-
 module.exports.register = (app) => {
+    app.command('/view_case', viewCaseDetailsCommand);
     app.command('/view_injured_worker', injuredWorkerCommand);
     app.command('/view_care_plan', carePlanViewCommand);
     app.command('/capture_notes', captureNotesCommand);

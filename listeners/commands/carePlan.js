@@ -1,4 +1,4 @@
-const carePlanView = {
+/* const carePlanView = {
 	"type": "modal",
 	"title": {
 		"type": "plain_text",
@@ -63,6 +63,72 @@ const carePlanView = {
 			}
 		}
 	]
-}
+}*/
+//            `SELECT Id, Name, Case.caseNumber, Description, StartDate, EndDate, Participant.Name, CarePlanTemplate.Name, Status FROM CarePlan LIMIT 5`
+
+const caseCarePlansView = (careplans => {
+    let result = []
+    for(const plan in careplans){
+        const carePlanBlocks = [
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": `*Name:*\n${plan.Name}`
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": `*Case:*\n<example.com|${plan.Case.caseNumber}>`
+                    }
+                ]
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": `*Start Date:*\n${plan.StartDate}`
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": `*End Date:*\n${plan.EndDate}`
+                    }
+                ]
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": `*Status:*\n${plan.Status}`
+                    }
+                ]
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": `*Description:*\n${plan.description}`
+                    }
+                ]
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "<https://example.com|View request>"
+                }
+            }
+        ]
+
+        result = [].concat(result, careplans)
+        
+    }
+
+    return result
+    
+})
 
 module.exports = { carePlanView }

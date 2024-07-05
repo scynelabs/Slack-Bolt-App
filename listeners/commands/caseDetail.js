@@ -1,7 +1,9 @@
     //             `SELECT Id, Work_Type_Group__r.Name, CaseNumber, Status, Licence_Type__c, Subject, Priority, Application_Date__c, Type, Account.Name FROM Case WHERE id='500Hu00002AzUVyIAN'`
 // eslint-disable
-const caseDetailsView = (caseInfo => {
+const caseDetailsView = (caseData => {
 
+    const records = caseData.records || []
+    const caseInfo = records[0] || {}
 
     return {
         "type": "modal",

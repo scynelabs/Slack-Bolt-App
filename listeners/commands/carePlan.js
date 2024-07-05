@@ -66,7 +66,10 @@
 }*/
 //            `SELECT Id, Name, Case.caseNumber, Description, StartDate, EndDate, Participant.Name, CarePlanTemplate.Name, Status FROM CarePlan LIMIT 5`
 
-const carePlanView = (careplans => {
+const carePlanView = (careplansData => {
+
+    const careplans = careplansData.records || []
+
     let result = []
     for(const plan in careplans){
         const carePlanBlocks = [

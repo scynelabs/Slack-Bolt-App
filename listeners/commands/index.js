@@ -54,7 +54,8 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
     try {
-
+        console.log('middleware context ==>', context)
+        
         if(context.hasAuthorized){
             console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
@@ -150,5 +151,5 @@ module.exports.register = (app) => {
     app.command('/view_care_plan', carePlanViewCommand);
     app.command('/capture_notes', captureNotesCommand);
 
-    app.event("message", messageHandler);
+    // app.event("message", messageHandler);
 };

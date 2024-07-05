@@ -29,7 +29,7 @@ const authWithSalesforce = async ({
 
     if (!slackUserId) {
 
-        if(context.slackUserId){
+        if(context.slackUserId || context.userId){
             slackUserId = context.userId || context.slackUserId;
         }else {
             // For all events Slack returns the users Id as user.id

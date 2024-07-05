@@ -73,7 +73,7 @@ const carePlanView = (careplansData => {
     console.log('carePlanBlocks ==>', careplans)
 
     let result = []
-    for(const plan in careplans){
+    for(const plan of careplans){
         const carePlanBlocks = [
             {
                 "type": "section",

@@ -24,19 +24,30 @@ const authWithSalesforce = async ({
     context = {},
     next,
     body,
-    slackUserId
+    slackUserId = context.slackUserId
 } = {}) => {
+
     if (!slackUserId) {
-        // For all events Slack returns the users Id as user.id
-        if (payload?.user?.id) {
-            slackUserId = payload.user.id;
-        } else if (payload?.user) {
-            // For Home Event payload.user gives the Id
-            slackUserId = payload.user;
-        } else if (body?.user?.id) {
-            // For Views Listener Event, we retrieve it from the Body
-            slackUserId = body.user.id;
+
+        if(context.slackUserId){
+            slackUserId = context.slackUserId;
+        }else {
+            // For all events Slack returns the users Id as user.id
+            if (payload?.user?.id) {
+                slackUserId = payload.user.id;
+            } else if (payload?.user) {
+                // For Home Event payload.user gives the Id
+                slackUserId = payload.user;
+            } else if (body?.user?.id) {
+                // For Views Listener Event, we retrieve it from the Body
+                slackUserId = body.user.id;
+            }
+
+            
+            context.slackUserId = slackUserId
         }
+
+
     }
 
     console.log('Executing Salesforce auth middleware slackUser ==>', slackUserId);

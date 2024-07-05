@@ -70,6 +70,8 @@ const carePlanView = (careplansData => {
 
     const careplans = careplansData.records || []
 
+    console.log('carePlanBlocks ==>', careplans)
+
     let result = []
     for(const plan in careplans){
         const carePlanBlocks = [
@@ -82,7 +84,7 @@ const carePlanView = (careplansData => {
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Case:*\n<example.com|${plan.Case.caseNumber}>`
+                        "text": `*Case:*\n<example.com|${plan.Case.CaseNumber}>`
                     }
                 ]
             },
@@ -126,7 +128,7 @@ const carePlanView = (careplansData => {
             }
         ]
 
-        result = [].concat(result, careplans)
+        result = [].concat(result, carePlanBlocks)
         
     }
 

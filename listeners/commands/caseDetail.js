@@ -23,7 +23,7 @@ const caseDetailsView = (caseData => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Case number:*\n${caseInfo.caseNumber}`
+                        "text": `*Case number:*\n${caseInfo.CaseNumber}`
                     },
                     {
                         "type": "mrkdwn",

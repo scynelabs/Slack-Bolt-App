@@ -59,7 +59,7 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
         if(context.hasAuthorized){
             console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
-            // await fetchData( { body, context, logger})
+            await fetchData( { body, context, logger})
             // Call views.open with the built-in client
             const result = await client.views.open({
                   // Pass a valid trigger_id within 3 seconds of receiving it
@@ -124,22 +124,12 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
 
 const fetchData = async ({ body, context, logger }) => {
     try {
-        if (context.hasAuthorized) {
-            try {
-                // fetch data
-                const requestId = 'case-id';
-                const data = await queryCaseDetail(
-                        context.sfconnection,
-                        requestId
-                    );
-                console.log('case data ==>')
-                logger.info(data)
-            } catch (e) {
-                throw e;
-            }
-        } else {
-        //    console.log('SF dis-connection, please authorize')
-        }
+        const requestId = 'case-id';
+        const data = await queryCaseDetail(
+                context.sfconnection,
+                requestId
+            );
+        return data        
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);

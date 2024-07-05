@@ -50,7 +50,7 @@ const carePlanViewCommand = async ({ ack, body, client, logger }) => {
     }
 }
 
-const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
+const captureNotesCommand = async ({ ack, say, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
     try {

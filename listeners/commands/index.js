@@ -16,7 +16,7 @@ const {
 } = require('../../user-interface/modals');
 
 
-const viewCaseDetailsCommand = async ({ ack, say, body, client, logger }) => {
+const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
   
@@ -61,7 +61,7 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger }) => {
     }
 }
 
-const injuredWorkerCommand = async ({ ack, say, body, client, logger }) => {
+const injuredWorkerCommand = async ({ ack, say, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
   
@@ -104,7 +104,7 @@ const injuredWorkerCommand = async ({ ack, say, body, client, logger }) => {
     }
 }
 
-const carePlanViewCommand = async ({ ack, say, body, client, logger }) => {
+const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
   

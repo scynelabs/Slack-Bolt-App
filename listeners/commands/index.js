@@ -59,7 +59,9 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
         if(context.hasAuthorized){
             console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
+            console.time("fetch");
             await fetchData( { body, context, logger})
+            console.timeEnd("fetch");
             // Call views.open with the built-in client
             const result = await client.views.open({
                   // Pass a valid trigger_id within 3 seconds of receiving it

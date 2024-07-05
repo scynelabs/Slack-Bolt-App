@@ -55,7 +55,7 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     await ack();
     try {
         console.log('middleware context ==>', context)
-        
+
         if(context.hasAuthorized){
             console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
@@ -127,7 +127,7 @@ const fetchData = async ({ body, context, logger }) => {
         if (context.hasAuthorized) {
             try {
                 // fetch data
-                // const requestId = body.actions[0].value;
+                const requestId = 'case-id';
                 const data = await queryCaseDetail(
                         context.sfconnection,
                         requestId

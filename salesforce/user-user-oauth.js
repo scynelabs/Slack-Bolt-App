@@ -11,7 +11,9 @@ class UserToUserAuth {
 
     async connect() {
         try {
-            this.conn = new jsforce.Connection({
+
+            console.log()
+            const conn_config = {
                 oauth2: {
                     loginUrl: this.config.loginUrl,
                     clientId: this.config.clientId,
@@ -22,7 +24,9 @@ class UserToUserAuth {
                 accessToken: this.token.accessToken,
                 refreshToken: this.token.refreshToken,
                 version: this.config.apiVersion
-            });
+            };
+            console.log('Connection config ===>', conn_config)
+            this.conn = new jsforce.Connection(conn_config);
             await this.conn.oauth2.refreshToken(this.token.refreshToken);
             return this.conn;
         } catch (e) {

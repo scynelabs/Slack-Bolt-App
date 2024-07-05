@@ -93,7 +93,7 @@ const authWithSalesforce = async ({
                 };
                 const userToUserAuth = new UserToUserAuth(
                     config.salesforce,
-                    serverToServerConnection.instance_url, // Can we obtain this in a different way?
+                    serverToServerConnection.instanceUrl, // Can we obtain this in a different way?
                     token
                 );
                 userToUserConnection = await userToUserAuth.connect();

@@ -1,6 +1,6 @@
     //             `SELECT Id, Work_Type_Group__r.Name, CaseNumber, Status, Licence_Type__c, Subject, Priority, Application_Date__c, Type, Account.Name FROM Case WHERE id='500Hu00002AzUVyIAN'`
 // eslint-disable
-const caseDetailsView = async (caseInfo => {
+const caseDetailsView = (caseInfo => {
 
 
     return {

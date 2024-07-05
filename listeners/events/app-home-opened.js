@@ -22,6 +22,8 @@ const appHomeOpenedCallback = async ({ client, event, context }) => {
                 //view: authorizationSuccessScreen(currentuser.username)
             });
         } else {
+
+            console.log('Show OAuth home screen appHomeOpenedCallback ==> ')
             // Call views.publish with the built-in client
             await client.views.publish({
                 user_id: event.user,

@@ -84,6 +84,8 @@ const authWithSalesforce = async ({
             if (connectionCache.has(slackUserId)) {
                 userToUserConnection = connectionCache.get(slackUserId);
             } else {
+
+                console.log('serverToServerConnection ==>', serverToServerConnection)
                 // Construct token object
                 const token = {
                     accessToken: authInfo.Access_Token__c,
@@ -91,7 +93,7 @@ const authWithSalesforce = async ({
                 };
                 const userToUserAuth = new UserToUserAuth(
                     config.salesforce,
-                    serverToServerConnection.instanceUrl, // Can we obtain this in a different way?
+                    serverToServerConnection.instance_url, // Can we obtain this in a different way?
                     token
                 );
                 userToUserConnection = await userToUserAuth.connect();

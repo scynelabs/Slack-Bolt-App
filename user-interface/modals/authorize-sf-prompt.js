@@ -2,6 +2,7 @@
 const { Modal, Blocks } = require('slack-block-builder');
 
 const authorizeSalesforcePrompt = (teamId, appId) => {
+    console.log('Showing authorizeSalesforcePrompt ==>')
     return Modal({ title: 'Salesforce Slack App', close: 'Close' })
         .blocks(
             Blocks.Section({

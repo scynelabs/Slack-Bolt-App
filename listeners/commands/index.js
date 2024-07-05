@@ -53,10 +53,11 @@ const carePlanViewCommand = async ({ ack, body, client, logger }) => {
 const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
-    console.log('capture notes view ==>', JSON.stringify(captureNotesView))
     try {
 
         if(context.hasAuthorized){
+            console.log('capture notes view ==>', JSON.stringify(captureNotesView))
+
             await fetchData( { body, context, logger})
             // Call views.open with the built-in client
             const result = await client.views.open({

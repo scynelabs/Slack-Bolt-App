@@ -70,7 +70,7 @@ const carePlanView = (careplansData => {
 
     const careplans = careplansData.records || []
 
-    console.log('carePlanBlocks ==>', careplans)
+    console.log('carePlanBlocks data ==>', JSON.stringify(careplans))
 
     let result = []
     for(const plan of careplans){

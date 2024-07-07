@@ -118,9 +118,12 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
             const data = await queryCaseCarePlans(
                 context.sfconnection,
                 requestId
-            );  
-            
-            say(await carePlanView(data))
+            );
+
+            const cpView = await carePlanView(data)
+            console.log('Care Plans View ==>', cpView)
+            say('Show Care plans')
+            // say(await carePlanView(data))
 
         }else {
             // Get BotInfo

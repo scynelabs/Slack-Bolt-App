@@ -122,7 +122,7 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
 
             const cpView = await carePlanView(data)
             console.log('Care Plans View ==>', JSON.stringify(cpView))
-            say('Show Care plans')
+            say(cpView)
             // say(await carePlanView(data))
 
         }else {

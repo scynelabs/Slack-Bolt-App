@@ -128,11 +128,28 @@ const carePlanView = (careplansData => {
             }
         ]
 
-        result = [].concat(result, carePlanBlocks)
+		carePlanBlocks.push({
+			"type": "divider"
+		})
+
+        result = [].concat(result, carePlanBlocks )
         
     }
 
-    return result
+    return {
+		"type": "modal",
+		"title": {
+			"type": "plain_text",
+			"text": "Care Plan",
+			"emoji": true
+		},
+		"close": {
+			"type": "plain_text",
+			"text": "Close",
+			"emoji": true
+		},
+		"blocks": result,
+	}
     
 })
 

@@ -217,7 +217,7 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
 
 const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     // Acknowledge the command request
-    ack();
+    await ack();
 
     try {
         // console.log('middleware context ==>', context)
@@ -235,7 +235,7 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
             // await fetchData( { body, context, logger})
             // console.timeEnd("fetch");
 
-            say(captureNotesView)
+            await say(captureNotesView)
            
             // // Call views.open with the built-in client
             // const result = await client.views.open({

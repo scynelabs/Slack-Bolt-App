@@ -235,15 +235,15 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
             // await fetchData( { body, context, logger})
             // console.timeEnd("fetch");
 
-            await say(captureNotesView)
+            // await say(captureNotesView)
            
             // // Call views.open with the built-in client
-            // const result = await client.views.open({
-            //       // Pass a valid trigger_id within 3 seconds of receiving it
-            //       trigger_id: body.trigger_id,
-            //       // View payload
-            //       view: captureNotesView         
-            //   });
+            const result = await client.views.open({
+                  // Pass a valid trigger_id within 3 seconds of receiving it
+                  trigger_id: body.trigger_id,
+                  // View payload
+                  view: captureNotesView         
+              });
             //   logger.info(result);
               
         }else{

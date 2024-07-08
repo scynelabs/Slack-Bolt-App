@@ -41,7 +41,7 @@ const caseDetailsView = (caseData => {
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Contact Mobile:*\n${caseInfo.CreatedDate}`
+                        "text": `*Priority:*\n${caseInfo.Priority}`
                     }
                 ]
             },
@@ -51,6 +51,10 @@ const caseDetailsView = (caseData => {
                     {
                         "type": "mrkdwn",
                         "text": `*Employer:*\n${caseInfo.Account.Name}`
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": `*Created Date:*\n${caseInfo.CreatedDate}`
                     }
                 ]
             }

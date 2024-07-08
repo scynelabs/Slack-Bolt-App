@@ -216,6 +216,8 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
 }
 
 const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
+
+    console.log('capture notes view ==>')
     // Acknowledge the command request
     await ack();
 

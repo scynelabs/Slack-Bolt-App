@@ -40,7 +40,8 @@ const slack = {
     token: process.env.SLACK_BOT_TOKEN,
     signingSecret: process.env.SLACK_SIGNING_SECRET,
     port: process.env.PORT || 3000,
-    aesKey: process.env.AES_KEY
+    aesKey: process.env.AES_KEY,
+    socketMode: process.env.SOCKET_MODE || false,
 };
 
 module.exports = {

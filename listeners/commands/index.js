@@ -32,7 +32,15 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
             );  
             console.log('case data ==>', caseId)
             logger.info(data)
-            say(await caseDetailsView(data))
+            // say(await caseDetailsView(data))
+
+            const { user_id, channel_id } = body;
+
+            await client.chat.postEphemeral({
+                channel: channel_id,
+                user: user_id,
+                blocks: await caseDetailsView(data)
+            });
 
         }else {
             // Get BotInfo

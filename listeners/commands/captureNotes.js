@@ -1,7 +1,7 @@
 const captureNotesView = {
 	"type": "modal",
 	// View identifier
-	"callback_id": 'add_notes_files',	
+	// "callback_id": 'add_notes_files',	
 	"title": {
 		"type": "plain_text",
 		"text": "Notes & Files",

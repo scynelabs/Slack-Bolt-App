@@ -84,7 +84,7 @@ const injuredWorkerCommand = async ({ ack, say, body, client, logger, context })
                 caseId
             );  
             console.log('case data ==>', caseId)
-            say(await injuredWorkerCommand(data))
+            say(await injuredWorkerView(data))
             /*
         // Call views.open with the built-in client
         const result = await client.views.open({

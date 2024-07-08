@@ -217,15 +217,16 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
 
 const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     // Acknowledge the command request
-    await ack();
+    ack();
+
     try {
         // console.log('middleware context ==>', context)
 
-        console.log('Client info ==>')
-        logger.info(client)
+        // console.log('Client info ==>')
+        // logger.info(client)
 
-        console.log('Body info ==>')
-        logger.info(body)
+        // console.log('Body info ==>')
+        // logger.info(body)
 
         if(context.hasAuthorized){
             console.log('capture notes view ==>', JSON.stringify(captureNotesView))
@@ -234,7 +235,7 @@ const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
             // await fetchData( { body, context, logger})
             // console.timeEnd("fetch");
 
-            await say(captureNotesView)
+            say(captureNotesView)
            
             // // Call views.open with the built-in client
             // const result = await client.views.open({
@@ -320,5 +321,5 @@ module.exports.register = (app) => {
     app.command('/view_claims', claimsViewCommand);
     app.command('/capture_notes', captureNotesCommand);
 
-    // app.event("message", messageHandler);
+    app.event("message", messageHandler);
 };

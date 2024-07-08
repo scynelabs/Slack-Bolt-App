@@ -323,5 +323,5 @@ module.exports.register = (app) => {
     app.command('/view_claims', claimsViewCommand);
     app.command('/capture_notes', captureNotesCommand);
 
-    app.event("message", messageHandler);
+    // app.event("message", messageHandler);
 };

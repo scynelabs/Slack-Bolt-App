@@ -42,6 +42,7 @@ const receiver = new ExpressReceiver({
     app
 });
 
+console.log('slack app config ==>', config.slack)
 // Initializes your app with your bot token and signing secret
 const boltApp = new App({
     ...config.slack,

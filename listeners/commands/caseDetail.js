@@ -1,4 +1,5 @@
     //             `SELECT Id, Work_Type_Group__r.Name, CaseNumber, Status, Licence_Type__c, Subject, Priority, Application_Date__c, Type, Account.Name FROM Case WHERE id='500Hu00002AzUVyIAN'`
+    // `SELECT Id, Case__r.caseNumber, Employer_Account__r.Name, Injured_Worker__r.Name, Injury_Details__c, Injury_Type__c, CreateDate FROM Case WHERE Case__c='${caseId}'`
 // eslint-disable
 const caseDetailsView = (caseData => {
 

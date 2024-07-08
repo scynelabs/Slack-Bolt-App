@@ -16,7 +16,7 @@ const queryAllCases = async (connection) => {
     }
 };
 
-const queryCaseDetail = async (connection, caseId='500Kj00001aT9qdIAC') => {
+const queryCaseDetail = async (connection, caseId='500Kj00001ZwOx4IAF') => {
     try {
         //Get the UserId
         const currentuser = await connection.identity();
@@ -48,7 +48,7 @@ const queryCaseCarePlans = async (connection) => {
     }
 };
 
-const queryCaseInjuredWorker = async (connection, caseId='500Kj00001aT9qdIAC') => {
+const queryCaseInjuredWorker = async (connection, caseId='500Kj00001ZwOx4IAF') => {
     try {
         //Get the UserId
         const currentuser = await connection.identity();

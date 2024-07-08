@@ -25,12 +25,12 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
     try {
 
         if(context.hasAuthorized){
-            const requestId = ''
+            const caseId = getCaseId(body)
             const data = await queryCaseDetail(
                 context.sfconnection,
-                requestId
+                caseId
             );  
-            console.log('case data ==>')
+            console.log('case data ==>', caseId)
             logger.info(data)
             say(await caseDetailsView(data))
 
@@ -69,12 +69,12 @@ const injuredWorkerCommand = async ({ ack, say, body, client, logger, context })
   
     try {
         if(context.hasAuthorized){
-            const requestId = ''
+            const caseId = getCaseId(body)
             const data = await queryCaseInjuredWorker(
                 context.sfconnection,
-                requestId
+                caseId
             );  
-            
+            console.log('case data ==>', caseId)
             say(await injuredWorkerCommand(data))
             /*
         // Call views.open with the built-in client
@@ -112,14 +112,14 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
   
     try {
         // console.log('middleware context ==>', context)
-
+        console.log('case data ==>', caseId)
         if(context.hasAuthorized){
             // console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
-            const requestId = ''
+            const caseId = getCaseId(body)
             const data = await queryCaseCarePlans(
                 context.sfconnection,
-                requestId
+                caseId
             );
 
             const cpView = await carePlanView(data)
@@ -166,12 +166,12 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
         if(context.hasAuthorized){
             // console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
-            const requestId = ''
+            const caseId = getCaseId(body)
             const data = await queryClaims(
                 context.sfconnection,
-                requestId
+                caseId
             );
-
+            console.log('case data ==>', caseId)
             const cpView = await claimsView(data)
             console.log('Claims View ==>', JSON.stringify(cpView))
             say(cpView)
@@ -288,6 +288,20 @@ const messageHandler = async ({ client, body, say, event, payload, logger }) => 
     // show swarming completed
     await say('swarming will be closed.')
   }
+}
+
+function getCaseId(body){
+    //channel_name
+    if(body && body.channel_name){
+        const regexp = /swarm-case-([\w\d]+)/g;
+        const str = body.channel_name
+
+        const matchingResult = [...str.matchAll(regexp)];
+        if(matchingResult && matchingResult.length > 0){
+            return matchingResult[0][1]
+        }
+    }
+    return null
 }
 
 module.exports.register = (app) => {

@@ -4,12 +4,14 @@ const { caseDetailsView } = require('./caseDetail');
 const { injuredWorkerView } = require('./injuredWorker');
 const { captureNotesView } = require('./captureNotes');
 const { carePlanView } = require('./carePlan');
+const { claimsView } = require('./claims');
 const { channel } = require('slack-block-builder');
 const { 
     queryAllCases,
     queryCaseDetail, 
     queryCaseCarePlans,
-    queryCaseInjuredWorker
+    queryCaseInjuredWorker,
+    queryClaims
 } = require('../../salesforce/query/cases');
 const {
     authorizeSalesforcePrompt,
@@ -154,11 +156,67 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
     }
 }
 
+const claimsViewCommand = async ({ ack, say, body, client, logger, context }) => {
+    // Acknowledge the command request
+    await ack();
+  
+    try {
+        // console.log('middleware context ==>', context)
+
+        if(context.hasAuthorized){
+            // console.log('capture notes view ==>', JSON.stringify(captureNotesView))
+
+            const requestId = ''
+            const data = await queryClaims(
+                context.sfconnection,
+                requestId
+            );
+
+            const cpView = await claimsView(data)
+            console.log('Claims View ==>', JSON.stringify(cpView))
+            say(cpView)
+            // say(await carePlanView(data))
+
+        }else {
+            // Get BotInfo
+            const botInfo = await client.bots.info({ bot: context.botId });
+            // Open a Modal with message to navigate to App Home for authorization
+            await client.views.open({
+                trigger_id: body.trigger_id,
+                view: authorizeSalesforcePrompt(
+                    context.teamId,
+                    botInfo.bot.app_id
+                )
+            });            
+        }
+        /*
+      // Call views.open with the built-in client
+      const result = await client.views.open({
+        // Pass a valid trigger_id within 3 seconds of receiving it
+        trigger_id: body.trigger_id,
+        // View payload
+        view: {...carePlanView}
+
+        });
+        logger.info(result);
+        */
+    }
+    catch (error) {
+        logger.error(error);
+    }
+}
+
 const captureNotesCommand = async ({ ack, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
     try {
         // console.log('middleware context ==>', context)
+
+        console.log('Client info ==>')
+        logger.info(client)
+
+        console.log('Body info ==>')
+        logger.info(body)
 
         if(context.hasAuthorized){
             console.log('capture notes view ==>', JSON.stringify(captureNotesView))
@@ -236,6 +294,7 @@ module.exports.register = (app) => {
     app.command('/view_case', viewCaseDetailsCommand);
     app.command('/view_injured_worker', injuredWorkerCommand);
     app.command('/view_care_plan', carePlanViewCommand);
+    app.command('/view_claims', claimsViewCommand);
     app.command('/capture_notes', captureNotesCommand);
 
     // app.event("message", messageHandler);

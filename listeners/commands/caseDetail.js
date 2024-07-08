@@ -36,11 +36,11 @@ const caseDetailsView = (caseData => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Plan Type:*\n${caseInfo.Licence_Type__c}`
+                        "text": `*Plan Type:*\n${caseInfo.Type}`
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Contact Mobile:*\n${caseInfo.Application_Date__c}`
+                        "text": `*Contact Mobile:*\n${caseInfo.CreatedDate}`
                     }
                 ]
             },

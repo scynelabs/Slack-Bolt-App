@@ -70,6 +70,7 @@ const claimsView = (careplansData => {
 
     const careplans = careplansData.records || []
 
+	// `SELECT Id, Case__r.caseNumber, Employer_Account__r.Name, Injured_Worker__r.Name, Injury_Details__c, Injury_Type__c, CreatedDate FROM Lodgement_Claim__c WHERE Case__r.caseNumber='${caseNumber}'`
     console.log('carePlanBlocks data ==>', JSON.stringify(careplans))
 
     let result = []
@@ -84,7 +85,7 @@ const claimsView = (careplansData => {
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Case:*\n<example.com|${plan.Case.CaseNumber}>`
+                        "text": `*Case:*\n<example.com|${plan.Case__r.CaseNumber}>`
                     }
                 ]
             },
@@ -93,11 +94,11 @@ const claimsView = (careplansData => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Start Date:*\n${plan.StartDate}`
+                        "text": `*Employer:*\n${plan.Employer_Account__r.Name}`
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*End Date:*\n${plan.EndDate}`
+                        "text": `*Injured Worker:*\n${plan.Injured_Worker__r.Name}`
                     }
                 ]
             },
@@ -106,7 +107,7 @@ const claimsView = (careplansData => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Status:*\n${plan.Status}`
+                        "text": `*Injury Type:*\n${plan.Injury_Type__c}`
                     }
                 ]
             },
@@ -115,7 +116,7 @@ const claimsView = (careplansData => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Description:*\n${plan.description}`
+                        "text": `*Created Date:*\n${plan.CreatedDate}`
                     }
                 ]
             },

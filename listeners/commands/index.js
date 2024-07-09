@@ -21,7 +21,9 @@ const {
 const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
-  
+
+    say('/view_case')
+    /*
     try {
 
         if(context.hasAuthorized){
@@ -55,21 +57,22 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
                 )
             });  
         }        
-        /*     
+           
       // Call views.open with the built-in client
-      const result = await client.views.open({
-        // Pass a valid trigger_id within 3 seconds of receiving it
-        trigger_id: body.trigger_id,
-        // View payload
-        view: {...injuredWorkerView}
+    //   const result = await client.views.open({
+    //     // Pass a valid trigger_id within 3 seconds of receiving it
+    //     trigger_id: body.trigger_id,
+    //     // View payload
+    //     view: {...injuredWorkerView}
 
-        });
-        logger.info(result);
-        */
+    //     });
+    //     logger.info(result);
+        
     }
     catch (error) {
         logger.error(error);
     }
+    */
 }
 
 const injuredWorkerCommand = async ({ ack, say, body, client, logger, context }) => {

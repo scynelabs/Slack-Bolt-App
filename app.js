@@ -63,11 +63,11 @@ registerCustomRoutes().forEach((route) => {
     receiver.router[method](route.path, route.handler);
 });
 
-boltApp.command('/view_case', async ({ ack, say, body, client, logger, context }) => {
-    await ack()
+// boltApp.command('/view_case', async ({ ack, say, body, client, logger, context }) => {
+//     await ack()
 
-    say('/view case')
-});
+//     say('/view case')
+// });
 
 // Register Listeners
 registerListeners(boltApp);

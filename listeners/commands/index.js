@@ -31,7 +31,7 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
                 caseId
             );  
             console.log('case data ==>', caseId)
-            logger.info(data)
+            logger.info(body)
 
 
             const { channel_id, user_id } = body

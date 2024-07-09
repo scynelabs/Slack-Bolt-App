@@ -22,8 +22,6 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
     // Acknowledge the command request
     await ack();
 
-    say('/view_case')
-    /*
     try {
 
         if(context.hasAuthorized){
@@ -72,7 +70,7 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
     catch (error) {
         logger.error(error);
     }
-    */
+    
 }
 
 const injuredWorkerCommand = async ({ ack, say, body, client, logger, context }) => {

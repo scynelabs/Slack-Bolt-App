@@ -30,9 +30,18 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
                 context.sfconnection,
                 caseId
             );  
+
+            const { channel_id, user_id } = body
             console.log('case data ==>', caseId)
             logger.info(data)
-            say(await caseDetailsView(data))
+
+            await client.chat.postEphemeral({
+                channel: channel_id,
+                user: user_id,
+                blocks
+              });
+            
+            // say(await caseDetailsView(data))
 
             // const { user_id, channel_id } = body;
 

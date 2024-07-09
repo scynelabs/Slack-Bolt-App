@@ -10,5 +10,6 @@ module.exports.registerListeners = (app) => {
     shortcutsListener.register(app);
     eventsListener.register(app);
     actionListener.register(app);
+    commandsListener.register(app);
     viewsListener.register(app);
 };

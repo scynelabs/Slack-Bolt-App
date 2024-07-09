@@ -53,16 +53,21 @@ const boltApp = new App({
 // Assign Slack WebClient
 persistedClient.client = boltApp.client;
 
-// Use global middleware to fetch Salesforce Authentication details
-boltApp.use(authWithSalesforce);
+// // Use global middleware to fetch Salesforce Authentication details
+// boltApp.use(authWithSalesforce);
 
-// Defining ExpressReceiver custom routes
-receiver.router.use(express.json());
-registerCustomRoutes().forEach((route) => {
-    const method = route.method[0].toLowerCase();
-    receiver.router[method](route.path, route.handler);
+// // Defining ExpressReceiver custom routes
+// receiver.router.use(express.json());
+// registerCustomRoutes().forEach((route) => {
+//     const method = route.method[0].toLowerCase();
+//     receiver.router[method](route.path, route.handler);
+// });
+
+boltApp.command('/view_case', async ({ ack, say, body, client, logger, context }) => {
+    await ack()
+
+    say('/view case')
 });
-
 
 // Register Listeners
 registerListeners(boltApp);

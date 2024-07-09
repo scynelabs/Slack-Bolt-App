@@ -318,13 +318,7 @@ function getCaseId(body){
 }
 
 module.exports.register = (app) => {
-    // app.command('/view_case', viewCaseDetailsCommand);
-    app.command('/view_case', async ({ ack, say, body, client, logger, context }) => {
-        await ack()
-    
-        say('/view_case')
-    });
-
+    app.command('/view_case', viewCaseDetailsCommand);
     app.command('/view_injured_worker', injuredWorkerCommand);
     app.command('/view_care_plan', carePlanViewCommand);
     app.command('/view_claims', claimsViewCommand);

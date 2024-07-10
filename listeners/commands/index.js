@@ -92,7 +92,8 @@ const injuredWorkerCommand = async ({ ack, say, body, client, logger, context })
             await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
-                blocks 
+                blocks,
+                text: 'Case details ' + caseId
             });
             
         }else {
@@ -138,7 +139,8 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
             await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
-                blocks 
+                blocks,
+                text: 'Care Plan details '
             });
 
             // say(await carePlanView(data))
@@ -197,7 +199,8 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
             await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
-                blocks 
+                blocks,
+                text: 'Claims details '
             });
             // say(await carePlanView(data))
 

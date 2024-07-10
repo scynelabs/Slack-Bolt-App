@@ -72,7 +72,19 @@ const carePlanView = (careplansData => {
 
     console.log('carePlanBlocks data ==>', JSON.stringify(careplans))
 
-    let result = []
+    let result = [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": `Care plan`,
+				"emoji": true
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
     for(const plan of careplans){
         const carePlanBlocks = [
             {

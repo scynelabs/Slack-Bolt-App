@@ -73,9 +73,22 @@ const claimsView = (careplansData => {
 	// `SELECT Id, Case__r.caseNumber, Employer_Account__r.Name, Injured_Worker__r.Name, Injury_Details__c, Injury_Type__c, CreatedDate FROM Lodgement_Claim__c WHERE Case__r.caseNumber='${caseNumber}'`
     console.log('carePlanBlocks data ==>', JSON.stringify(careplans))
 
-    let result = []
+    let result = [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": `Claims`,
+				"emoji": true
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+
     for(const plan of careplans){
-        const carePlanBlocks = [
+        const carePlanBlocks = [						
             {
                 "type": "section",
                 "fields": [

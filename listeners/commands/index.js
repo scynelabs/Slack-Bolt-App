@@ -85,19 +85,16 @@ const injuredWorkerCommand = async ({ ack, say, body, client, logger, context })
                 caseId
             );  
             console.log('case data ==>', caseId)
-            say(await injuredWorkerView(data))
-            /*
-        // Call views.open with the built-in client
-        const result = await client.views.open({
-            // Pass a valid trigger_id within 3 seconds of receiving it
-            trigger_id: body.trigger_id,
-            // View payload
-            view: {...injuredWorkerView}
+            // say(await injuredWorkerView(data))
+            const { user_id, channel_id } = body;
 
+            const { blocks } = await injuredWorkerView(data)
+            await client.chat.postEphemeral({
+                channel: channel_id,
+                user: user_id,
+                blocks 
             });
-            logger.info(result);
-            */
-
+            
         }else {
             // Get BotInfo
             const botInfo = await client.bots.info({ bot: context.botId });
@@ -132,9 +129,18 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
                 caseId
             );
 
-            const cpView = await carePlanView(data)
-            console.log('Care Plans View ==>', JSON.stringify(cpView))
-            say(cpView)
+            // const cpView = await carePlanView(data)
+            // console.log('Care Plans View ==>', JSON.stringify(cpView))
+            // say(cpView)
+            const { user_id, channel_id } = body;
+
+            const { blocks } = await carePlanView(data)
+            await client.chat.postEphemeral({
+                channel: channel_id,
+                user: user_id,
+                blocks 
+            });
+
             // say(await carePlanView(data))
 
         }else {
@@ -182,9 +188,17 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
                 caseId
             );
             console.log('case data ==>', caseId)
-            const cpView = await claimsView(data)
-            console.log('Claims View ==>', JSON.stringify(cpView))
-            say(cpView)
+            // const cpView = await claimsView(data)
+            // console.log('Claims View ==>', JSON.stringify(cpView))
+            // say(cpView)
+            const { user_id, channel_id } = body;
+
+            const { blocks } = await claimsView(data)
+            await client.chat.postEphemeral({
+                channel: channel_id,
+                user: user_id,
+                blocks 
+            });
             // say(await carePlanView(data))
 
         }else {

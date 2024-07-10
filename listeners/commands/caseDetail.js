@@ -20,6 +20,17 @@ const caseDetailsView = (caseData => {
         },
         "blocks": [
             {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": `Case Details - ${caseInfo.CaseNumber}`,
+                    "emoji": true
+                }
+            },
+            {
+                "type": "divider"
+            },
+            {
                 "type": "section",
                 "fields": [
                     {

@@ -12,6 +12,17 @@ const injuredWorkerView = {
 	},
 	"blocks": [
 		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": `Injured worker`,
+				"emoji": true
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
 			"type": "section",
 			"fields": [
 				{

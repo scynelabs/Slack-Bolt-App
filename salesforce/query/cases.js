@@ -56,7 +56,7 @@ const queryCaseInjuredWorker = async (connection, caseNumber) => {
         // Query for travel requests
         const result = await connection.query(
             //`SELECT Id, Cost__c, Description__c, Destination__c, End_Date__c, Origin__c, Start_Date__c, Status__c, Owner.Name, Name FROM Travel_Request__c WHERE Approver__c = \'${currentuser.user_id}\' AND Status__c = 'New' ORDER BY Name`
-            `SELECT Id, Contact.Name, Account.Name, ContactEmail, ContactPhone, ContactMobile FROM Case WHERE CaseNumber='${caseNumber}'`
+            `SELECT Id, Contact.Name, Account.Name, ContactEmail, ContactPhone, ContactMobile, Contact.MailingAddress FROM Case WHERE CaseNumber='${caseNumber}'`
         );
         return result;
     } catch (e) {

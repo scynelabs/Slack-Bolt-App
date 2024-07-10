@@ -3,6 +3,8 @@ const injuredWorkerView =  (caseData => {
     const records = caseData.records || []
     const caseInfo = records[0] || {}
 	// `SELECT Id, Contact.Name, Account.Name, ContactEmail, ContactPhone, ContactMobile FROM Case WHERE CaseNumber='${caseNumber}'`
+	const mailingAddress = caseInfo.Contact?.MailingAddress;
+	const address = mailingAddress && mailingAddress.MailingStreet ? `${mailingAddress?.MailingStreet}\n${mailingAddress.MailingCity}\n${mailingAddress.MailingState}\n${mailingAddress.MailingPostCode}\n${mailingAddress.MailingCountry}`: ''
     return {
 		"type": "modal",
 		"title": {
@@ -62,7 +64,7 @@ const injuredWorkerView =  (caseData => {
 					},
 					{
 						"type": "mrkdwn",
-						"text": `*Mailing Address:*\n${caseInfo.Contact?.MailingAddress}`
+						"text": `*Mailing Address:*\n${address}`
 					}
 				]
 			}

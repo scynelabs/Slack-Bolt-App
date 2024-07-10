@@ -37,12 +37,14 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
             const { user_id, channel_id } = body;
 
             const { blocks } = await caseDetailsView(data)
-            await client.chat.postEphemeral({
+            const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
                 blocks 
             });
 
+            console.log('/view_case result')
+            logger.info(result)
         }else {
             // Get BotInfo
             const botInfo = await client.bots.info({ bot: context.botId });
@@ -89,13 +91,15 @@ const injuredWorkerCommand = async ({ ack, say, body, client, logger, context })
             const { user_id, channel_id } = body;
 
             const { blocks } = await injuredWorkerView(data)
-            await client.chat.postEphemeral({
+            const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
                 blocks,
                 text: 'Case details ' + caseId
             });
             
+            console.log('/view_injured_worker result')
+            logger.info(result)
         }else {
             // Get BotInfo
             const botInfo = await client.bots.info({ bot: context.botId });
@@ -136,15 +140,15 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
             const { user_id, channel_id } = body;
 
             const { blocks } = await carePlanView(data)
-            await client.chat.postEphemeral({
+            const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
                 blocks,
                 text: 'Care Plan details '
             });
 
-            // say(await carePlanView(data))
-
+            console.log('/view_care_plan result')
+            logger.info(result)
         }else {
             // Get BotInfo
             const botInfo = await client.bots.info({ bot: context.botId });
@@ -196,14 +200,14 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
             const { user_id, channel_id } = body;
 
             const { blocks } = await claimsView(data)
-            await client.chat.postEphemeral({
+            const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
                 blocks,
                 text: 'Claims details '
             });
-            // say(await carePlanView(data))
-
+            console.log('/view_claims result')
+            logger.info(result)
         }else {
             // Get BotInfo
             const botInfo = await client.bots.info({ bot: context.botId });

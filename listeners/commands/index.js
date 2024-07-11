@@ -257,6 +257,9 @@ const allCaseActionsCommand = async ({ ack, say, body, client, logger, context }
             // const cpView = await claimsView(data)
             // console.log('Claims View ==>', JSON.stringify(cpView))
             // say(cpView)
+            console.log('body ==>')
+            logger.info(body)
+            
             const { user_id, channel_id } = body;
 
             const { blocks } = await allCaseActionsView()

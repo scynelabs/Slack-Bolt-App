@@ -407,11 +407,11 @@ const buttonClickAction = async ({ ack, say, body, client, logger, event }) => {
     logger.info(body)
     //   await say('Button clicked');
 
-    const { user_id, channel_id } = body;
+    // const { user_id, channel_id } = body;
 
     const result = await client.chat.postEphemeral({
-        channel: channel_id,
-        user: user_id,
+        channel: body.channel.id,
+        user: body.user.id,
         text: 'Button action event '
     });
 }

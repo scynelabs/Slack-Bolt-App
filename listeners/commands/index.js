@@ -430,32 +430,32 @@ module.exports.register = (app) => {
     app.command('/capture_notes', captureNotesCommand);
     app.command('/all_actions', allCaseActionsCommand)
 
-    app.action('view_case', async ({ ack, say, body, client, logger, event }) => {
+    app.action('view_case', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
-        await viewCaseDetailsCommand({ack, say, body, client, logger, event})
+        await viewCaseDetailsCommand({ack, say, body, client, logger, event, context})
     });
-    app.action('view_injured_worker', async ({ ack, say, body, client, logger, event }) => {
+    app.action('view_injured_worker', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
-        await injuredWorkerCommand({ack, say, body, client, logger, event})
+        await injuredWorkerCommand({ack, say, body, client, logger, event, context})
     });
-    app.action('view_care_plan', async ({ ack, say, body, client, logger, event }) => {
+    app.action('view_care_plan', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
-        await carePlanViewCommand({ack, say, body, client, logger, event})
+        await carePlanViewCommand({ack, say, body, client, logger, event, context})
     });
-    app.action('view_claims', async ({ ack, say, body, client, logger, event }) => {
+    app.action('view_claims', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
-        await claimsViewCommand({ack, say, body, client, logger, event})
+        await claimsViewCommand({ack, say, body, client, logger, event, context})
     });
-    app.action('capture_notes', async ({ ack, say, body, client, logger, event }) => {
+    app.action('capture_notes', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
-        await captureNotesCommand({ack, say, body, client, logger, event})
+        await captureNotesCommand({ack, say, body, client, logger, event, context})
     });
-    app.action('finish_case_swarm', async ({ ack, say, body, client, logger, event }) => {
+    app.action('finish_case_swarm', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
         console.log('Close swarm')

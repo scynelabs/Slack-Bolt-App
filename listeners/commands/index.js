@@ -26,6 +26,9 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
 
     try {
 
+        console.log('body ==>')
+        logger.info(body)
+
         if(context.hasAuthorized){
             const caseId = getCaseId(body)
             const data = await queryCaseDetail(
@@ -259,7 +262,7 @@ const allCaseActionsCommand = async ({ ack, say, body, client, logger, context }
             // say(cpView)
             console.log('body ==>')
             logger.info(body)
-            
+
             const { user_id, channel_id } = body;
 
             const { blocks } = await allCaseActionsView()
@@ -427,11 +430,48 @@ module.exports.register = (app) => {
     app.command('/capture_notes', captureNotesCommand);
     app.command('/all_actions', allCaseActionsCommand)
 
-    app.action('view_case', buttonClickAction);
-    app.action('view_injured_worker', buttonClickAction);
-    app.action('view_care_plan', buttonClickAction);
-    app.action('view_claims', buttonClickAction);
-    app.action('capture_notes', buttonClickAction);
-    app.action('finish_case_swarm', buttonClickAction)
+    app.action('view_case', async ({ ack, say, body, client, logger, event }) => {
+        // Acknowledge action request
+        await ack();    
+        body.user_id = body.user.id
+        body.channel_id = body.channel.id
+        await viewCaseDetailsCommand({ack, say, body, client, logger, event})
+    });
+    app.action('view_injured_worker', async ({ ack, say, body, client, logger, event }) => {
+        // Acknowledge action request
+        await ack();    
+        body.user_id = body.user.id
+        body.channel_id = body.channel.id
+        await injuredWorkerCommand({ack, say, body, client, logger, event})
+    });
+    app.action('view_care_plan', async ({ ack, say, body, client, logger, event }) => {
+        // Acknowledge action request
+        await ack();    
+        body.user_id = body.user.id
+        body.channel_id = body.channel.id
+        await carePlanViewCommand({ack, say, body, client, logger, event})
+    });
+    app.action('view_claims', async ({ ack, say, body, client, logger, event }) => {
+        // Acknowledge action request
+        await ack();    
+        body.user_id = body.user.id
+        body.channel_id = body.channel.id
+        await claimsViewCommand({ack, say, body, client, logger, event})
+    });
+    app.action('capture_notes', async ({ ack, say, body, client, logger, event }) => {
+        // Acknowledge action request
+        await ack();    
+        body.user_id = body.user.id
+        body.channel_id = body.channel.id
+        await captureNotesCommand({ack, say, body, client, logger, event})
+    });
+    app.action('finish_case_swarm', async ({ ack, say, body, client, logger, event }) => {
+        // Acknowledge action request
+        await ack();    
+        body.user_id = body.user.id
+        body.channel_id = body.channel.id
+        console.log('Close swarm')
+        // await captureNotesCommand({ack, say, body, client, logger, event})
+    });
     // app.event("message", messageHandler);
 };

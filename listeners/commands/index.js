@@ -5,7 +5,8 @@ const { injuredWorkerView } = require('./injuredWorker');
 const { captureNotesView } = require('./captureNotes');
 const { carePlanView } = require('./carePlan');
 const { claimsView } = require('./claims');
-const { channel } = require('slack-block-builder');
+const { allCaseActionsView } = require('./allCaseActions');
+
 const { 
     queryAllCases,
     queryCaseDetail, 
@@ -16,6 +17,7 @@ const {
 const {
     authorizeSalesforcePrompt,
 } = require('../../user-interface/modals');
+
 
 
 const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context }) => {
@@ -124,7 +126,6 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
   
     try {
         // console.log('middleware context ==>', context)
-        console.log('case data ==>', caseId)
         if(context.hasAuthorized){
             // console.log('capture notes view ==>', JSON.stringify(captureNotesView))
 
@@ -207,6 +208,65 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
                 text: 'Claims details '
             });
             console.log('/view_claims result')
+            logger.info(result)
+        }else {
+            // Get BotInfo
+            const botInfo = await client.bots.info({ bot: context.botId });
+            // Open a Modal with message to navigate to App Home for authorization
+            await client.views.open({
+                trigger_id: body.trigger_id,
+                view: authorizeSalesforcePrompt(
+                    context.teamId,
+                    botInfo.bot.app_id
+                )
+            });            
+        }
+        /*
+      // Call views.open with the built-in client
+      const result = await client.views.open({
+        // Pass a valid trigger_id within 3 seconds of receiving it
+        trigger_id: body.trigger_id,
+        // View payload
+        view: {...carePlanView}
+
+        });
+        logger.info(result);
+        */
+    }
+    catch (error) {
+        logger.error(error);
+    }
+}
+
+const allCaseActionsCommand = async ({ ack, say, body, client, logger, context }) => {
+    // Acknowledge the command request
+    await ack();
+  
+    try {
+        // console.log('middleware context ==>', context)
+
+        if(context.hasAuthorized){
+            // console.log('capture notes view ==>', JSON.stringify(captureNotesView))
+
+            // const caseId = getCaseId(body)
+            // const data = await queryClaims(
+            //     context.sfconnection,
+            //     caseId
+            // );
+            // console.log('case data ==>', caseId)
+            // const cpView = await claimsView(data)
+            // console.log('Claims View ==>', JSON.stringify(cpView))
+            // say(cpView)
+            const { user_id, channel_id } = body;
+
+            const { blocks } = await allCaseActionsView()
+            const result = await client.chat.postEphemeral({
+                channel: channel_id,
+                user: user_id,
+                blocks,
+                text: 'All Case actions '
+            });
+            console.log('/all_actions result')
             logger.info(result)
         }else {
             // Get BotInfo
@@ -338,12 +398,37 @@ function getCaseId(body){
     return null
 }
 
+
+const buttonClickAction = async ({ ack, say, body, client, logger, event }) => {
+    // Acknowledge action request
+    await ack();
+    console.log('Action evnet data')
+    logger.info(event)
+    logger.info(body)
+    //   await say('Button clicked');
+
+    const { user_id, channel_id } = body;
+
+    const result = await client.chat.postEphemeral({
+        channel: channel_id,
+        user: user_id,
+        text: 'Button action event '
+    });
+}
+
 module.exports.register = (app) => {
     app.command('/view_case', viewCaseDetailsCommand);
     app.command('/view_injured_worker', injuredWorkerCommand);
     app.command('/view_care_plan', carePlanViewCommand);
     app.command('/view_claims', claimsViewCommand);
     app.command('/capture_notes', captureNotesCommand);
+    app.command('/all_actions', allCaseActionsCommand)
 
+    app.action('view_case', buttonClickAction);
+    app.action('view_injured_worker', buttonClickAction);
+    app.action('view_care_plan', buttonClickAction);
+    app.action('view_claims', buttonClickAction);
+    app.action('capture_notes', buttonClickAction);
+    app.action('finish_case_swarm', buttonClickAction)
     // app.event("message", messageHandler);
 };

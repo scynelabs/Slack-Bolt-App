@@ -433,31 +433,37 @@ module.exports.register = (app) => {
     app.action('view_case', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
+        body.channel_name = body.channel.name
         await viewCaseDetailsCommand({ack, say, body, client, logger, event, context})
     });
     app.action('view_injured_worker', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
+        body.channel_name = body.channel.name
         await injuredWorkerCommand({ack, say, body, client, logger, event, context})
     });
     app.action('view_care_plan', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
+        body.channel_name = body.channel.name
         await carePlanViewCommand({ack, say, body, client, logger, event, context})
     });
     app.action('view_claims', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
+        body.channel_name = body.channel.name
         await claimsViewCommand({ack, say, body, client, logger, event, context})
     });
     app.action('capture_notes', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
+        body.channel_name = body.channel.name
         await captureNotesCommand({ack, say, body, client, logger, event, context})
     });
     app.action('finish_case_swarm', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
+        body.channel_name = body.channel.name
         console.log('Close swarm')
         // await captureNotesCommand({ack, say, body, client, logger, event})
     });

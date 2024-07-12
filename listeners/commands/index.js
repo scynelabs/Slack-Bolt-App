@@ -457,28 +457,29 @@ function getCaseId(body){
 }
 
 
-const buttonClickAction = async ({ ack, say, body, client, logger, event }) => {
-    // Acknowledge action request
-    await ack();
-    console.log('Action evnet data')
-    logger.info(event)
-    logger.info(body)
-    //   await say('Button clicked');
+// const buttonClickAction = async ({ ack, say, body, client, logger, event }) => {
+//     // Acknowledge action request
+//     await ack();
+//     console.log('Action evnet data')
+//     logger.info(event)
+//     logger.info(body)
+//     //   await say('Button clicked');
 
-    // const { user_id, channel_id } = body;
+//     // const { user_id, channel_id } = body;
 
-    const result = await client.chat.postEphemeral({
-        channel: body.channel.id,
-        user: body.user.id,
-        text: 'Button action event '
-    });
-}
+//     const result = await client.chat.postEphemeral({
+//         channel: body.channel.id,
+//         user: body.user.id,
+//         text: 'Button action event '
+//     });
+// }
 
 module.exports.register = (app) => {
     app.command('/view_case', viewCaseDetailsCommand);
     app.command('/view_injured_worker', injuredWorkerCommand);
     app.command('/view_care_plan', carePlanViewCommand);
     app.command('/view_claims', claimsViewCommand);
+    app.command('/close_swarm', closeSwarmCommand);
     app.command('/capture_notes', captureNotesCommand);
     app.command('/all_actions', allCaseActionsCommand)
 

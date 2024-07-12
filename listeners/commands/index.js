@@ -517,7 +517,7 @@ module.exports.register = (app) => {
     });
     app.action('finish_case_swarm', async ({ ack, say, body, client, logger, event, context }) => {
 
-        await ack()
+        // await ack()
 
         body.user_id = body.user.id
         body.channel_id = body.channel.id

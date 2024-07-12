@@ -12,7 +12,8 @@ const {
     queryCaseDetail, 
     queryCaseCarePlans,
     queryCaseInjuredWorker,
-    queryClaims
+    queryClaims,
+    closwSwarm
 } = require('../../salesforce/query/cases');
 const {
     authorizeSalesforcePrompt,
@@ -355,39 +356,90 @@ const captureNotesCommand = async ({ ack, say, body, client, logger, context }) 
     }
 }
 
+const closeSwarmCommand = async ({ ack, say, body, client, logger, context }) => {
+    // Acknowledge the command request
+    await ack();
+  
+    try {
+        // console.log('middleware context ==>', context)
 
-const messageHandler = async ({ client, body, say, event, payload, logger }) => {
+        if(context.hasAuthorized){
+
+            console.log('body ==>')
+            logger.info(body)
+
+            const { user_id, channel_id } = body;
+
+            // const { blocks } = await allCaseActionsView()
+            const caseNumber = getCaseId(body)
+            await closwSwarm(
+                context.sfconnection,
+                caseNumber
+            )
+    
+            // await say("Closing the swarm :white_check_mark:")
+            const result = await client.chat.postMessage({
+                channel: channel_id,
+                user: user_id,
+                text: 'Closing the swarm :white_check_mark:'
+            });
+
+            console.log('Result ==>')
+            logger.info(result)
+
+        }else {
+            // Get BotInfo
+            const botInfo = await client.bots.info({ bot: context.botId });
+            // Open a Modal with message to navigate to App Home for authorization
+            await client.views.open({
+                trigger_id: body.trigger_id,
+                view: authorizeSalesforcePrompt(
+                    context.teamId,
+                    botInfo.bot.app_id
+                )
+            });            
+        }
+    }
+    catch (error) {
+        logger.error(error);
+    }
+}
+
+
+const messageHandler = async ({ ack, client, body, say, event, payload, logger, context }) => {
 
     const { text } = payload
 
     console.log('message event payload text', text, payload)
-  /*
-  { user: 'U079T1163ML',
-  type: 'message',
-  ts: '1719793726.359189',
-  client_msg_id: '29e31091-3b0d-4d27-8061-f2c5ff966297',
-  text: 'message payload test',
-  team: 'T07ANDG2X6C',
-  blocks:
-   [ { type: 'rich_text', block_id: 'mLY6j', elements: [Array] } ],
-  channel: 'C079ZGA2GJF',
-  event_ts: '1719793726.359189',
-  channel_type: 'channel' }
-  */
+    /*
+    { user: 'U079T1163ML',
+    type: 'message',
+    ts: '1719793726.359189',
+    client_msg_id: '29e31091-3b0d-4d27-8061-f2c5ff966297',
+    text: 'message payload test',
+    team: 'T07ANDG2X6C',
+    blocks:
+    [ { type: 'rich_text', block_id: 'mLY6j', elements: [Array] } ],
+    channel: 'C079ZGA2GJF',
+    event_ts: '1719793726.359189',
+    channel_type: 'channel' }
+    */
 
-  if(text.indexOf(':face_with_head_bandage:') != -1){
-    // show injured worker details
-    await say(injuredWorkerView)
-  }
-  
-  else if(text.indexOf(':innocent') != -1){
-    // show care plan
-    await say(carePlanView)
+    if(text.indexOf(':face_with_head_bandage:') != -1){
+        // show injured worker details
+        // await say(injuredWorkerView)
+        await injuredWorkerCommand({ack, say, body, client, logger, event, context})
+    }
+    
+    else if(text.indexOf(':innocent') != -1){
+        // show care plan
+        // await say(carePlanView)
+        await carePlanViewCommand({ack, say, body, client, logger, event, context})
 
-  }else if(text.indexOf(':white_check_mark:') != -1){
-    // show swarming completed
-    await say('swarming will be closed.')
-  }
+    }else if(text.indexOf(':white_check_mark:') != -1){
+        // show swarming completed
+        await say('swarming will be closed.')
+    }
 }
 
 function getCaseId(body){
@@ -430,6 +482,9 @@ module.exports.register = (app) => {
     app.command('/capture_notes', captureNotesCommand);
     app.command('/all_actions', allCaseActionsCommand)
 
+    app.event("message", messageHandler);
+
+
     app.action('view_case', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id
         body.channel_id = body.channel.id
@@ -461,11 +516,15 @@ module.exports.register = (app) => {
         await captureNotesCommand({ack, say, body, client, logger, event, context})
     });
     app.action('finish_case_swarm', async ({ ack, say, body, client, logger, event, context }) => {
+
+        await ack()
+
         body.user_id = body.user.id
         body.channel_id = body.channel.id
         body.channel_name = body.channel.name
         console.log('Close swarm')
-        // await captureNotesCommand({ack, say, body, client, logger, event})
+        await closeSwarmCommand({ack, say, body, client, logger, event, context})
+
     });
-    // app.event("message", messageHandler);
+
 };

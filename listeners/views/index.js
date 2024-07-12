@@ -5,8 +5,10 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
     // Acknowledge the view_submission request
     await ack();
 
+    
     logger.info('User submitted dialog ==>')
     logger.info(view.state)
+    logger.info(body)
   
     /*
     // Do whatever you want with the input data - here we're saving it to a DB then sending the user a verification of their submission

@@ -80,11 +80,19 @@ const queryClaims = async (connection, caseNumber) => {
     }
 };
 
+const closwSwarm = async (connection, caseNumber) => {
+    // body payload structure is depending to the Apex REST method interface.
+    const body = { action: 'closeSwarm', caseNumber };
+    const res = await conn.apex.post("/CaseManagement/v1/"+caseNumber, body);
+    console.log("response: ", res);
+}
+
 
 module.exports = {
     queryAllCases,
     queryCaseDetail, 
     queryCaseCarePlans,
     queryCaseInjuredWorker,
-    queryClaims
+    queryClaims,
+    closwSwarm
 };

@@ -80,6 +80,6 @@ const captureNotesView = (data => {
 			}
 		]
 	}
-}
+})
 
 module.exports = { captureNotesView }

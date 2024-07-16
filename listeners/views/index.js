@@ -1,4 +1,7 @@
 
+const { 
+  saveCaseNotesAndFiles
+} = require('../../salesforce/query/cases');
 
 // Handle a view_submission request
 const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
@@ -31,21 +34,54 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
     } else {
       msg = 'There was an error with your submission';
     }
-  
+    */
     // Message the user
     try {
-      await client.chat.postMessage({
-        channel: user,
-        text: msg
+      // await client.chat.postMessage({
+      //   channel: user,
+      //   text: msg
+      // });
+      const caseNumber = _getCaseId(body)
+      const notesData = {
+        subject: view.state.values['notes_subject_block_id']["subject"],
+        description: view.state.values['notes_description_block_id']["description"]
+      };
+
+      await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData)
+      /*
+      if(view.state.values['notes_file_block_id']["file_input_action_id_1"].files.length > 0){
+        fetch()
+        .then(res => res.blob()) // Gets the response and returns it as a blob
+        .then(blob => {
+          // Here's where you get access to the blob
+          // And you can use it for whatever you want
+          // Like calling ref().put(blob)
+          await saveCaseNotesAndFiles(context.sfConnection, caseNumber, {
+
+          })
       });
+      }*/
     }
     catch (error) {
       logger.error(error);
     }
-    */
-  
-  };
+    
+};
 
-  module.exports.register = (app) => {
+function _getCaseId(body){
+  //channel_name
+  if(body){
+      const regexp = /swarm-case-([\w\d]+)/g;
+      const str = body.channel_name || body.channel?.name
+
+      const matchingResult = [...str.matchAll(regexp)];
+      if(matchingResult && matchingResult.length > 0){
+          return matchingResult[0][1]
+      }
+  }
+  return null
+}
+
+module.exports.register = (app) => {
     app.view('add_notes_files', addCaseNotes);
 };

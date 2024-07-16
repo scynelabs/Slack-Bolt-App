@@ -82,7 +82,24 @@ const queryClaims = async (connection, caseNumber) => {
 
 const closwSwarm = async (connection, caseNumber) => {
     // body payload structure is depending to the Apex REST method interface.
-    const body = { action: 'closeSwarm', caseNumber };
+    // const body = { action: 'closeSwarm', caseNumber };
+    const body = {
+        "data": {"caseNumber": caseNumber },
+        "event": "closeSwarm"
+    }        
+    
+    const res = await connection.apex.post("/CaseManagement/v1/"+caseNumber, body);
+    console.log("response: ", res);
+}
+
+const saveCaseNotesAndFiles = async (connection, caseNumber, notesData) => {
+    // body payload structure is depending to the Apex REST method interface.
+    // const body = { action: 'closeSwarm', caseNumber };
+    const body = {
+        "data": {"caseNumber": caseNumber, ...notesData },
+        "event": "addNotes"
+    }        
+    
     const res = await connection.apex.post("/CaseManagement/v1/"+caseNumber, body);
     console.log("response: ", res);
 }
@@ -94,5 +111,6 @@ module.exports = {
     queryCaseCarePlans,
     queryCaseInjuredWorker,
     queryClaims,
-    closwSwarm
+    closwSwarm,
+    saveCaseNotesAndFiles
 };

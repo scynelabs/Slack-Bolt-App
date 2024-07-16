@@ -53,7 +53,7 @@ const captureNotesView = {
 			},
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "notes",
+				"action_id": "description",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "Type in here"

@@ -8,8 +8,8 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
     // Acknowledge the view_submission request
     await ack();
 
-    
-    logger.info('User submitted dialog ==>', JSON.stringify(view.state.values))
+    logger.info('Body submitted dialog ==>', JSON.stringify(body));
+    logger.info('User submitted dialog ==>', JSON.stringify(view.state.values));
     logger.info(view.state.values)
     logger.info(body)
   

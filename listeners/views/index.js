@@ -10,7 +10,10 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
     logger.info(view.state.values)
     logger.info(body)
   
-    /*
+    //input_block_id: { file_input_action_id_1: { type: 'file_input', files: [Array] } }
+    console.log('File data', view.state.values['notes_subject_block_id']["file_input_action_id_1"].files)
+
+    /*"block_id": "notes_subject_block_id",
     // Do whatever you want with the input data - here we're saving it to a DB then sending the user a verification of their submission
   
     // Assume there's an input block with `block_1` as the block_id and `input_a`

@@ -28,6 +28,7 @@ const captureNotesView = {
 		},
 		{
 			"type": "input",
+			"block_id": "notes_subject_block_id",
 			"label": {
 				"type": "plain_text",
 				"text": "Subject"
@@ -45,6 +46,7 @@ const captureNotesView = {
 		},
 		{
 			"type": "input",
+			"block_id": "notes_description_block_id",
 			"label": {
 				"type": "plain_text",
 				"text": "Notes"
@@ -62,7 +64,7 @@ const captureNotesView = {
 		},
 		{
 			"type": "input",
-			"block_id": "input_block_id",
+			"block_id": "notes_file_block_id",
 			"label": {
 			  "type": "plain_text",
 			  "text": "Upload Files"

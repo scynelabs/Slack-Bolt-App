@@ -52,20 +52,29 @@ const caseDetailsView = (caseData => {
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Priority:*\n${caseInfo.Priority}`
+                        "text": `*Priority:*\n${caseInfo.SDO_Sub_Type__c}`
                     }
                 ]
             },
             {
                 "type": "section",
-                "fields": [
+                "fields": [                    
                     {
                         "type": "mrkdwn",
-                        "text": `*Employer:*\n${caseInfo.Account.Name}`
+                        "text": `*Priority:*\n${caseInfo.Priority}`
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Created Date:*\n${caseInfo.CreatedDate}`
+                        "text": `*Employer:*\n${caseInfo.Account.Name}`
+                    }                    
+                ]
+            },
+            {
+                "type": "section",
+                "fields": [                    
+                    {
+                        "type": "mrkdwn",
+                        "text": `*Created Date:*\n${(new Date(caseInfo.CreatedDate)).toLocaleString()}`
                     }
                 ]
             }

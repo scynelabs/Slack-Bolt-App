@@ -61,22 +61,19 @@ const captureNotesView = {
 			"optional": false
 		},
 		{
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": "Please upload the necessary files."
+			"type": "input",
+			"block_id": "input_block_id",
+			"label": {
+			  "type": "plain_text",
+			  "text": "Upload Files"
 			},
-			"accessory": {
-				"type": "button",
-				"text": {
-					"type": "plain_text",
-					"text": "Upload"
-				},
-				"value": "click",
-				"url": "https://www.google.com",
-				"action_id": "button-action"
-			}
-		}
+			"element": {
+			  "type": "file_input",
+			  "action_id": "file_input_action_id_1",
+			  "filetypes": ["jpg", "png"],
+			  "max_files": 1,
+			},
+		  }
 	]
 }
 

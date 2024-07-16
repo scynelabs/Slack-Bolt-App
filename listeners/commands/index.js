@@ -42,7 +42,7 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
             // say(await caseDetailsView(data))
             const { user_id, channel_id } = body;
 
-            const { blocks } = await caseDetailsView(data)
+            const { blocks } = await caseDetailsView(data, context.sfconnection?.instanceUrl)
             const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
@@ -96,7 +96,7 @@ const injuredWorkerCommand = async ({ ack, say, body, client, logger, context })
             // say(await injuredWorkerView(data))
             const { user_id, channel_id } = body;
 
-            const { blocks } = await injuredWorkerView(data)
+            const { blocks } = await injuredWorkerView(data, context.sfconnection?.instanceUrl)
             const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
@@ -144,7 +144,7 @@ const carePlanViewCommand = async ({ ack, say, body, client, logger, context }) 
             // say(cpView)
             const { user_id, channel_id } = body;
 
-            const { blocks } = await carePlanView(data)
+            const { blocks } = await carePlanView(data, context.sfconnection?.instanceUrl)
             const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
@@ -204,7 +204,7 @@ const claimsViewCommand = async ({ ack, say, body, client, logger, context }) =>
             // say(cpView)
             const { user_id, channel_id } = body;
 
-            const { blocks } = await claimsView(data)
+            const { blocks } = await claimsView(data, context.sfconnection?.instanceUrl)
             const result = await client.chat.postEphemeral({
                 channel: channel_id,
                 user: user_id,
@@ -326,16 +326,16 @@ const captureNotesCommand = async ({ ack, say, body, client, logger, context }) 
             // await fetchData( { body, context, logger})
             // console.timeEnd("fetch");
 
-            await say(captureNotesView)
+            // await say(captureNotesView)
            
-            // // Call views.open with the built-in client
-            // const result = await client.views.open({
-            //       // Pass a valid trigger_id within 3 seconds of receiving it
-            //       trigger_id: body.trigger_id,
-            //       // View payload
-            //       view: captureNotesView         
-            //   });
-            //   logger.info(result);
+            // Call views.open with the built-in client
+            const result = await client.views.open({
+                  // Pass a valid trigger_id within 3 seconds of receiving it
+                  trigger_id: body.trigger_id,
+                  // View payload
+                  view: captureNotesView         
+              });
+              logger.info(result);
               
         }else{
             // Get BotInfo

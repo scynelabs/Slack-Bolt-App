@@ -66,7 +66,7 @@
 }*/
 //            `SELECT Id, Name, Case.caseNumber, Description, StartDate, EndDate, Participant.Name, CarePlanTemplate.Name, Status FROM CarePlan LIMIT 5`
 
-const claimsView = (careplansData => {
+const claimsView = ((careplansData, sfUrl) => {
 
     const careplans = careplansData.records || []
 
@@ -98,7 +98,7 @@ const claimsView = (careplansData => {
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Case:*\n<example.com|${plan.Case__r.CaseNumber}>`
+                        "text": `*Case:*\n<${sfUrl+'/'+plan.Case__r.Id}|${plan.Case__r.CaseNumber}>`
                     }
                 ]
             },
@@ -137,7 +137,7 @@ const claimsView = (careplansData => {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "<https://example.com|View request>"
+                    "text": `<${sfUrl+'/'+plan.Id}|View request>`
                 }
             }
         ]

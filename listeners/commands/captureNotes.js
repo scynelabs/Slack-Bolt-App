@@ -1,4 +1,4 @@
-const captureNotesView = async (data => {
+const captureNotesView = (data => {
 	return {
 		"type": "modal",
 		// View identifier
@@ -80,6 +80,6 @@ const captureNotesView = async (data => {
 			}
 		]
 	}
-})
+}
 
 module.exports = { captureNotesView }

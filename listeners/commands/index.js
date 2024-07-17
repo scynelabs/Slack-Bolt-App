@@ -426,19 +426,19 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     event_ts: '1719793726.359189',
     channel_type: 'channel' }
     */
+    const blankPromise = () => new Promise(resolve => resolve())
 
     if(text.indexOf(':face_with_head_bandage:') != -1){
         // show injured worker details
         // await say(injuredWorkerView)
-        // await injuredWorkerCommand({ack, say, body, client, logger, event, context})
-        const blankPromise = () => new Promise(resolve => resolve())
+        // await injuredWorkerCommand({ack, say, body, client, logger, event, context})        
         await injuredWorkerCommand({ack: blankPromise, say, body, client, logger, event, context})
     }
     
     else if(text.indexOf(':innocent') != -1){
         // show care plan
         // await say(carePlanView)
-        await carePlanViewCommand({ack, say, body, client, logger, event, context})
+        await carePlanViewCommand({ack: blankPromise, say, body, client, logger, event, context})
 
     }else if(text.indexOf(':white_check_mark:') != -1){
         // show swarming completed

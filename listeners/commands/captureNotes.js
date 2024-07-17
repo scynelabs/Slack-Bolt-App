@@ -18,6 +18,7 @@ const captureNotesView = (data => {
 			"text": "Cancel",
 			"emoji": true
 		},
+		"private_metadata": `${data.channel_name}`,
 		"blocks": [
 			{
 				"type": "section",

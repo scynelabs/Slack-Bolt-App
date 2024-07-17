@@ -415,6 +415,9 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
 
     const { text } = payload
 
+    
+    console.log('body ==>')
+    logger.info(body)
     console.log('message event payload text', text, payload)
     /*
     { user: 'U079T1163ML',

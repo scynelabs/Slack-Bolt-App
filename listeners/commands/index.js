@@ -84,6 +84,9 @@ const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context 
 const injuredWorkerCommand = async ({ ack, say, body, client, logger, context }) => {
     // Acknowledge the command request
     await ack();
+
+    console.log('injuredWorkerCommand ==>')
+    logger.info(body)
   
     try {
         if(context.hasAuthorized){

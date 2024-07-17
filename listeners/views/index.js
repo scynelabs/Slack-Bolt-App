@@ -14,7 +14,8 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
     logger.info(body)
   
     //input_block_id: { file_input_action_id_1: { type: 'file_input', files: [Array] } }
-    console.log('File data', view.state.values['notes_file_block_id']["file_input_action_id_1"].files)
+    const files = view.state.values['notes_file_block_id']["file_input_action_id_1"].files;
+    console.log('File data', files)
 
     /*"block_id": "notes_subject_block_id",
     // Do whatever you want with the input data - here we're saving it to a DB then sending the user a verification of their submission
@@ -37,11 +38,13 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
     */
     // Message the user
     try {
+
       // await client.chat.postMessage({
       //   channel: user,
       //   text: msg
       // });
-      body.channel_name = view['private_metadata'];
+
+      body.channel_name = view['private_metadata'];      
       const caseNumber = _getCaseId(body);
       const notesData = {
         caseNumber,
@@ -49,22 +52,16 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
         notesDescription: view.state.values['notes_description_block_id']["description"].value
       };
 
-      // console.log('Notes payload data ==>', notesData)
+      if(files.length > 0){
+        const fileUrl = files.files[0].url_private;
+        const downloadResponse = await fetch(fileUrl, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` },
+        });
+        notesData.notesFileBlob = downloadResponse.blob();
+      }
 
-      await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData)
-      /*
-      if(view.state.values['notes_file_block_id']["file_input_action_id_1"].files.length > 0){
-        fetch()
-        .then(res => res.blob()) // Gets the response and returns it as a blob
-        .then(blob => {
-          // Here's where you get access to the blob
-          // And you can use it for whatever you want
-          // Like calling ref().put(blob)
-          await saveCaseNotesAndFiles(context.sfConnection, caseNumber, {
-
-          })
-      });
-      }*/
+      await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData);     
     }
     catch (error) {
       logger.error(error);

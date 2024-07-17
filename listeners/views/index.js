@@ -77,6 +77,8 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
       
       const { user_id, channel_id } = private_metadata;
 
+      console.log('Private metadata ==>', private_metadata)
+
       const { blocks } = await notesFilesView({
         ...notesData,
         files

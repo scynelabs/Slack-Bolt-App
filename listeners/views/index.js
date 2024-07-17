@@ -3,7 +3,7 @@ const {
   saveCaseNotesAndFiles
 } = require('../../salesforce/query/cases');
 
-const notesFilesView = require('./notesFilesView')
+const { notesFilesView } = require('./notesFilesView')
 
 // Handle a view_submission request
 const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {

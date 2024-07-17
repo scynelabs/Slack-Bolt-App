@@ -1,4 +1,10 @@
 const captureNotesView = (data => {
+
+	const private_metadata = {
+		channel_name: data.channel_name,
+		channel_id: data.channel_id,
+		user_id: data.user_id
+	}
 	return {
 		"type": "modal",
 		// View identifier
@@ -18,7 +24,7 @@ const captureNotesView = (data => {
 			"text": "Cancel",
 			"emoji": true
 		},
-		"private_metadata": `${data.channel_name}`,
+		"private_metadata": `${JSON.stringify(private_metadata)}`,
 		"blocks": [
 			{
 				"type": "section",

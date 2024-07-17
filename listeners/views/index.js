@@ -3,6 +3,8 @@ const {
   saveCaseNotesAndFiles
 } = require('../../salesforce/query/cases');
 
+const notesFilesView = require('./notesFilesView')
+
 // Handle a view_submission request
 const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
     // Acknowledge the view_submission request
@@ -44,7 +46,9 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
       //   text: msg
       // });
 
-      body.channel_name = view['private_metadata'];      
+      const private_metadata = JSON.parse(view['private_metadata'])
+      body.channel_name = private_metadata.channel_name;
+
       const caseNumber = _getCaseId(body);
       const notesData = {
         caseNumber,
@@ -63,10 +67,23 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
 
       await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData);     
 
-      return {
+
+      
+      const { user_id, channel_id } = private_metadata;
+
+      const { blocks } = await notesFilesView({
         ...notesData,
         files
-      }
+      })
+
+      const result = await client.chat.postEphemeral({
+          channel: channel_id,
+          user: user_id,
+          blocks,
+          text: 'Notes & files and data '
+      });
+
+      logger.info(result)
     }
     catch (error) {
       logger.error(error);

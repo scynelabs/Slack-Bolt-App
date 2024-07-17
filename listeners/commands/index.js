@@ -416,8 +416,8 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     const { text } = payload
 
     
-    console.log('body ==>')
-    logger.info(body)
+    // console.log('body ==>')
+    // logger.info(body)
     console.log('message event payload text', text, payload)
     /*
     { user: 'U079T1163ML',
@@ -433,8 +433,8 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     channel_type: 'channel' }
     */
 
-    body.user_id = body.user.id;
-    body.channel_id = body.channel.id
+    body.user_id = payload.user;
+    body.channel_id = payload.channel;
     const blankPromise = () => new Promise(resolve => resolve())
 
     if(text.indexOf(':face_with_head_bandage:') != -1){

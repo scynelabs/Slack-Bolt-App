@@ -129,7 +129,7 @@ const claimsView = ((careplansData, sfUrl) => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Created Date:*\n${plan.CreatedDate}`
+                        "text": `*Created Date:*\n${(new Date(plan.CreatedDate)).toLocaleString()}`
                     }
                 ]
             },

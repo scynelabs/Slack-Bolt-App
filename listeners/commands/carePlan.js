@@ -65,6 +65,7 @@
 	]
 }*/
 //            `SELECT Id, Name, Case.caseNumber, Description, StartDate, EndDate, Participant.Name, CarePlanTemplate.Name, Status FROM CarePlan LIMIT 5`
+//             `SELECT Id, Name, Case__r.caseNumber, RTW__c, Start_Date__c, End_Date__c, Contact__r.Name, Status__c FROM Return_to_Work_Plan__c WHERE Case__r.caseNumber=${caseNumber}`
 
 const carePlanView = ((careplansData, sfUrl) => {
 
@@ -96,7 +97,7 @@ const carePlanView = ((careplansData, sfUrl) => {
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Case:*\n<${sfUrl+'/'+plan.Case.Id}|${plan.Case.CaseNumber}>`
+                        "text": `*Case:*\n<${sfUrl+'/'+plan.Case.Id}|${plan.Case__r.CaseNumber}>`
                     }
                 ]
             },
@@ -105,11 +106,11 @@ const carePlanView = ((careplansData, sfUrl) => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Start Date:*\n${plan.StartDate}`
+                        "text": `*Start Date:*\n${(new Date(plan.Start_Date__c)).toLocaleString()}`
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*End Date:*\n${plan.EndDate}`
+                        "text": `*End Date:*\n${(new Date(plan.End_Date__c)).toLocaleString()}`
                     }
                 ]
             },
@@ -118,7 +119,7 @@ const carePlanView = ((careplansData, sfUrl) => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Status:*\n${plan.Status}`
+                        "text": `*Status:*\n${plan.Status__c}`
                     }
                 ]
             },
@@ -127,7 +128,7 @@ const carePlanView = ((careplansData, sfUrl) => {
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": `*Description:*\n${plan.description}`
+                        "text": `*Description:*\n${plan.RTW__c}`
                     }
                 ]
             },

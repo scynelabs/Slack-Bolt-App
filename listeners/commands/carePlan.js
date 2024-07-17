@@ -97,7 +97,7 @@ const carePlanView = ((careplansData, sfUrl) => {
                     },
                     {
                         "type": "mrkdwn",
-                        "text": `*Case:*\n<${sfUrl+'/'+plan.Case.Id}|${plan.Case__r.CaseNumber}>`
+                        "text": `*Case:*\n<${sfUrl+'/'+plan.Case__r.Id}|${plan.Case__r.CaseNumber}>`
                     }
                 ]
             },

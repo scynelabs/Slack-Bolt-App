@@ -96,7 +96,7 @@ const saveCaseNotesAndFiles = async (connection, caseNumber, notesData) => {
     // body payload structure is depending to the Apex REST method interface.
     // const body = { action: 'closeSwarm', caseNumber };
     const body = {
-        "data": {"caseNumber": caseNumber, ...notesData },
+        "data": { ...notesData },
         "event": "addNotes"
     }        
     

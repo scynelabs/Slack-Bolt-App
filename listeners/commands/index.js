@@ -432,7 +432,7 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
         // show injured worker details
         // await say(injuredWorkerView)
         // await injuredWorkerCommand({ack, say, body, client, logger, event, context})        
-        await injuredWorkerCommand({ack: blankPromise, say, body, client, logger, event, context})
+        await injuredWorkerCommand({ack: ack || blankPromise, say: say, body: body, client: client, logger:logger, event: event, context: context})
     }
     
     else if(text.indexOf(':innocent') != -1){

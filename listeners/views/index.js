@@ -57,7 +57,7 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
       };
 
       if(files.length > 0){
-        const fileUrl = files.files[0].url_private;
+        const fileUrl = files[0].url_private;
         const downloadResponse = await fetch(fileUrl, {
           method: "GET",
           headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` },
@@ -80,7 +80,7 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
           channel: channel_id,
           user: user_id,
           blocks,
-          text: 'Notes & files and data '
+          text: 'Notes & files added '
       });
 
       logger.info(result)

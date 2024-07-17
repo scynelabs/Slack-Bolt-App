@@ -27,14 +27,16 @@ const notesFilesView = (data => {
                 ]
             },
             {
-                "type": "context",
-                "elements": [
-                    {
-                        "type": "file",
-                        "external_id": data.files[0].external_id,
-                        "source": "remote"
-                    }
-                ]
+                "type": "image",
+                "title": {
+                  "type": "plain_text",
+                  "text": "Shared file"
+                },
+                "block_id": "image-123",
+                "slack_file": {
+                  "id": `${data.files[0].id}`
+                },
+                "alt_text": `${data.notesSubject}`
             }
         ]
     }

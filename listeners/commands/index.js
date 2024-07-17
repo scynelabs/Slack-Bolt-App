@@ -435,24 +435,31 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
 
     body.user_id = payload.user;
     body.channel_id = payload.channel;
-    const blankPromise = () => new Promise(resolve => resolve())
 
-    if(text.indexOf(':face_with_head_bandage:') != -1){
-        // show injured worker details
-        // await say(injuredWorkerView)
-        // await injuredWorkerCommand({ack, say, body, client, logger, event, context})        
-        await injuredWorkerCommand({ack: ack || blankPromise, say: say, body, client, logger, event, context})
-    }
+    const channelInfo = await getChanneInfo(client, payload.team, payload.channel )
+    if(channelInfo) {
+        body.channel_name = channelInfo.name
+
+        const blankPromise = () => new Promise(resolve => resolve())
+
+        if(text.indexOf(':face_with_head_bandage:') != -1){
+            // show injured worker details
+            // await say(injuredWorkerView)
+            // await injuredWorkerCommand({ack, say, body, client, logger, event, context})        
+            await injuredWorkerCommand({ack: ack || blankPromise, say: say, body, client, logger, event, context})
+        }
+        
+        else if(text.indexOf(':innocent') != -1){
+            // show care plan
+            // await say(carePlanView)
+            await carePlanViewCommand({ack: blankPromise, say, body, client, logger, event, context})
     
-    else if(text.indexOf(':innocent') != -1){
-        // show care plan
-        // await say(carePlanView)
-        await carePlanViewCommand({ack: blankPromise, say, body, client, logger, event, context})
-
-    }else if(text.indexOf(':white_check_mark:') != -1){
-        // show swarming completed
-        await say('swarming will be closed.')
+        }else if(text.indexOf(':white_check_mark:') != -1){
+            // show swarming completed
+            await say('swarming will be closed.')
+        }        
     }
+
 }
 
 function getCaseId(body){
@@ -469,6 +476,16 @@ function getCaseId(body){
     return null
 }
 
+
+async function getChanneInfo(client, team_id, channel_id){
+    const response = await client.conversations.list({
+        exclude_archived: true,
+        team_id: team_id
+      });
+
+    const channels = response.channels.filter(c => c.id == channel_id)
+    return channels.length > 0 ? channels[0]: null
+}
 
 // const buttonClickAction = async ({ ack, say, body, client, logger, event }) => {
 //     // Acknowledge action request

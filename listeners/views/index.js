@@ -41,7 +41,8 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
       //   channel: user,
       //   text: msg
       // });
-      const caseNumber = _getCaseId(body)
+      body.channel_name = view['private_metadata'];
+      const caseNumber = _getCaseId(body);
       const notesData = {
         subject: view.state.values['notes_subject_block_id']["subject"],
         description: view.state.values['notes_description_block_id']["description"]

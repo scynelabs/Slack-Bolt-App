@@ -62,6 +62,11 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
       }
 
       await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData);     
+
+      return {
+        ...notesData,
+        files
+      }
     }
     catch (error) {
       logger.error(error);

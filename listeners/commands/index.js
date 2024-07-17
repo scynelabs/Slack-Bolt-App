@@ -430,7 +430,9 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     if(text.indexOf(':face_with_head_bandage:') != -1){
         // show injured worker details
         // await say(injuredWorkerView)
-        await injuredWorkerCommand({ack, say, body, client, logger, event, context})
+        // await injuredWorkerCommand({ack, say, body, client, logger, event, context})
+        const blankPromise = () => new Promise(resolve => resolve())
+        await injuredWorkerCommand({ack: blankPromise, say, body, client, logger, event, context})
     }
     
     else if(text.indexOf(':innocent') != -1){
@@ -486,7 +488,6 @@ module.exports.register = (app) => {
     app.command('/all_actions', allCaseActionsCommand)
 
     app.event("message", messageHandler);
-
 
     app.action('view_case', async ({ ack, say, body, client, logger, event, context }) => {
         body.user_id = body.user.id

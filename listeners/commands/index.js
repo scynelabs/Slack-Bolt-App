@@ -316,11 +316,13 @@ const captureNotesCommand = async ({ ack, say, body, client, logger, context }) 
         // console.log('Client info ==>')
         // logger.info(client)
 
-        // console.log('Body info ==>')
-        // logger.info(body)
+        console.log('captureNotesCommand Body info ==>')
+        logger.info(body)
+
+        const { user_id, channel_id } = body;
 
         if(context.hasAuthorized){
-            console.log('capture notes view ==>', JSON.stringify(captureNotesView({channel_name: body.channel_name })))
+            console.log('capture notes view ==>', JSON.stringify(captureNotesView({channel_name: body.channel_name, user_id, channel_id })))
 
             // console.time("fetch");
             // await fetchData( { body, context, logger})
@@ -333,7 +335,7 @@ const captureNotesCommand = async ({ ack, say, body, client, logger, context }) 
                   // Pass a valid trigger_id within 3 seconds of receiving it
                   trigger_id: body.trigger_id,
                   // View payload
-                  view: captureNotesView({channel_name: body.channel_name })         
+                  view: captureNotesView({channel_name: body.channel_name, user_id, channel_id })         
               });
               logger.info(result);
               

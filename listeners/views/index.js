@@ -45,11 +45,11 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
       const caseNumber = _getCaseId(body);
       const notesData = {
         caseNumber,
-        notesSubject: view.state.values['notes_subject_block_id']["subject"],
-        notesDescription: view.state.values['notes_description_block_id']["description"]
+        notesSubject: view.state.values['notes_subject_block_id']["subject"].value,
+        notesDescription: view.state.values['notes_description_block_id']["description"].value
       };
 
-      console.log('Notes payload data ==>', notesData)
+      // console.log('Notes payload data ==>', notesData)
 
       await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData)
       /*

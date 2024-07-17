@@ -87,6 +87,8 @@ const closwSwarm = async (connection, caseNumber) => {
         "data": {"caseNumber": caseNumber },
         "event": "closeSwarm"
     }        
+
+    console.log('CloseSwarm body payload data ==>', body)
     
     const res = await connection.apex.post("/CaseManagement/v1/"+caseNumber, body);
     console.log("response: ", res);
@@ -99,6 +101,8 @@ const saveCaseNotesAndFiles = async (connection, caseNumber, notesData) => {
         "data": { ...notesData },
         "event": "addNotes"
     }        
+
+    console.log('Notes body payload data ==>', body)
     
     const res = await connection.apex.post("/CaseManagement/v1/"+caseNumber, body);
     console.log("response: ", res);

@@ -41,7 +41,7 @@ const queryCaseCarePlans = async (connection, caseNumber) => {
         const result = await connection.query(
             //`SELECT Id, Cost__c, Description__c, Destination__c, End_Date__c, Origin__c, Start_Date__c, Status__c, Owner.Name, Name FROM Travel_Request__c WHERE Approver__c = \'${currentuser.user_id}\' AND Status__c = 'New' ORDER BY Name`
             // `SELECT Id, Name, Case.caseNumber, Description, StartDate, EndDate, Participant.Name, CarePlanTemplate.Name, Status FROM CarePlan LIMIT 5`
-            `SELECT Id, Name, Case__r.caseNumber, RTW__c, Start_Date__c, End_Date__c, Contact__r.Name, Status__c FROM Return_to_Work_Plan__c WHERE Case__r.caseNumber=${caseNumber}`
+            `SELECT Id, Name, Case__r.caseNumber, RTW__c, Start_Date__c, End_Date__c, Contact__r.Name, Status__c FROM Return_to_Work_Plan__c WHERE Case__r.caseNumber='${caseNumber}'`
         );
         return result;
     } catch (e) {

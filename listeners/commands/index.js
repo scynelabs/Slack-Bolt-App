@@ -429,13 +429,16 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     event_ts: '1719793726.359189',
     channel_type: 'channel' }
     */
+
+    body.user_id = body.user.id;
+    body.channel_id = body.channel.id
     const blankPromise = () => new Promise(resolve => resolve())
 
     if(text.indexOf(':face_with_head_bandage:') != -1){
         // show injured worker details
         // await say(injuredWorkerView)
         // await injuredWorkerCommand({ack, say, body, client, logger, event, context})        
-        await injuredWorkerCommand({ack: ack || blankPromise, say: say, body: body, client: client, logger:logger, event: event, context: context})
+        await injuredWorkerCommand({ack: ack || blankPromise, say: say, body, client, logger, event, context})
     }
     
     else if(text.indexOf(':innocent') != -1){

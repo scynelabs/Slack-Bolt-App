@@ -62,7 +62,10 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
           method: "GET",
           headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` },
         });
-        notesData.notesFileBlob = await downloadResponse.blob();
+
+        const reader = new FileReader();
+        const fileBlob = await downloadResponse.blob(); 
+        notesData.notesFileBlob = await reader.readAsText(fileBlob);
       }
 
       await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData);     

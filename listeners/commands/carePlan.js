@@ -129,6 +129,10 @@ const carePlanView = ((careplansData, sfUrl) => {
                     {
                         "type": "mrkdwn",
                         "text": `*RTW Plan:*\n${plan.RTW__c}`
+                    },
+					{
+                        "type": "mrkdwn",
+                        "text": `*RTW Plan Detail:*\n${plan.RTW_Plan_Detail__c}`
                     }
                 ]
             },

@@ -56,9 +56,11 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
         notesDescription: view.state.values['notes_description_block_id']["description"].value
       };
 
-      if(files.length > 0){
-        const fileUrl = files[0].url_private;
-        const downloadResponse = await fetch(fileUrl, {
+      const attachments = [];
+
+      for(const f of files){
+        
+        const downloadResponse = await fetch(f.url_private, {
           method: "GET",
           headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` },
         });
@@ -66,10 +68,16 @@ const addCaseNotes = async ({ ack, body, view, client, context, logger }) => {
         const fileBlob = await downloadResponse.blob(); 
         let buffer = Buffer.from(await fileBlob.arrayBuffer());
 
-        const notesBase64 = "data:" + fileBlob.type + ';base64,' + buffer.toString('base64');
-
-        notesData.notesFileBase64String = notesBase64; //await reader.readAsText(fileBlob);
+        let attachment = {
+          title: f.title,
+          fileType: f.mimetype,
+          notesFileBase64String: buffer.toString('base64')
+        }
+        
+        attachments.push(attachment);
       }
+
+      notesData.attachments = attachments
 
       await saveCaseNotesAndFiles(context.sfconnection, caseNumber, notesData);     
 

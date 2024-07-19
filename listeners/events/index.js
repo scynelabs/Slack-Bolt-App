@@ -10,10 +10,10 @@ module.exports.register = (app) => {
         console.log('file_shared event: payload ==>');
         logger.info(payload)
 
-        console.log('file_shared event: event ==>');
-        logger.info(event)
+        // console.log('file_shared event: event ==>');
+        // logger.info(event)
 
-        console.log('file_shared event: body ==>');
-        logger.info(body)        
+        // console.log('file_shared event: body ==>');
+        // logger.info(body)        
     });
 };

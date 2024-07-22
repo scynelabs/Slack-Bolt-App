@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');// uuidv4();
 const axios = require('axios');
 
-const startSession = async ((sfConnection, context) => {
+const startSession = async (sfConnection, context) => {
 
     // Send a POST request
     axios({
@@ -25,9 +25,9 @@ const startSession = async ((sfConnection, context) => {
 
         context.bot_sessionId = response.sessionId;
     })
-})
+}
 
-const sendMessage = async ((sfConnection, oauthToken, sessionId, transactionId, message) => {
+const sendMessage = async (sfConnection, oauthToken, sessionId, transactionId, message) => {
     // Send a POST request
     axios({
             method: 'post',
@@ -50,7 +50,7 @@ const sendMessage = async ((sfConnection, oauthToken, sessionId, transactionId, 
     ).then( response => {
         console.log('sendMessage session response ==>', response)
     })
-})
+}
 
 
 const closeSession = async (sessionId) => {

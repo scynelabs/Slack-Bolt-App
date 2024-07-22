@@ -28,6 +28,8 @@ const startSession = async (sfConnection, context) => {
     })
     */
 
+    console.log('Starting session...')
+
     axios.post(`${process.env.RUNTIME_BASE_URL}/v5.0.0/bots/${process.env.BOT_ID}/sessions`, 
         {
             "forceConfig": {
@@ -48,6 +50,25 @@ const startSession = async (sfConnection, context) => {
 
         context.bot_sessionId = response.data.sessionId;
     })
+    .catch(function (error) {
+        console.log('startSession Error ==>')
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
 }
 
 const sendMessage = async (sfConnection, oauthToken, sessionId, transactionId, message) => {
@@ -78,6 +99,7 @@ const sendMessage = async (sfConnection, oauthToken, sessionId, transactionId, m
 
 const closeSession = async (sessionId) => {
     // Send a POST request
+
     axios({
             method: 'delete',
             url: `${process.env.RUNTIME_BASE_URL}/v5.0.0/sessions/${sessionId}`,

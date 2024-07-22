@@ -109,6 +109,20 @@ const saveCaseNotesAndFiles = async (connection, caseNumber, notesData) => {
     console.log("response: ", res);
 }
 
+const saveCaseFiles = async (connection, caseNumber, notesData) => {
+    // body payload structure is depending to the Apex REST method interface.
+    // const body = { action: 'closeSwarm', caseNumber };
+    const body = {
+        "data": { ...notesData },
+        "event": "attachFile"
+    }        
+
+    console.log('Notes body payload data ==>', body)
+    
+    const res = await connection.apex.post("/CaseManagement/v1/"+caseNumber, body);
+    console.log("response: ", res);
+}
+
 
 module.exports = {
     queryAllCases,
@@ -117,5 +131,6 @@ module.exports = {
     queryCaseInjuredWorker,
     queryClaims,
     closwSwarm,
-    saveCaseNotesAndFiles
+    saveCaseNotesAndFiles,
+    saveCaseFiles
 };

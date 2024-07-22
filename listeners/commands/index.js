@@ -13,7 +13,8 @@ const {
     queryCaseCarePlans,
     queryCaseInjuredWorker,
     queryClaims,
-    closwSwarm
+    closwSwarm,
+    saveCaseFiles
 } = require('../../salesforce/query/cases');
 const {
     authorizeSalesforcePrompt,
@@ -413,7 +414,7 @@ const closeSwarmCommand = async ({ ack, say, body, client, logger, context }) =>
 
 const messageHandler = async ({ ack, client, body, say, event, payload, logger, context }) => {
 
-    const { text } = payload
+    // const { text } = payload
 
     
     // console.log('body ==>')
@@ -433,13 +434,21 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     channel_type: 'channel' }
     */
 
+    const { text, files } = payload;
+
     body.user_id = payload.user;
     body.channel_id = payload.channel;
 
-    const channelInfo = await getChanneInfo(client, payload.team, payload.channel )
-    if(channelInfo) {
-        body.channel_name = channelInfo.name
 
+    const channelInfo = await getChanneInfo(client, payload.team, payload.channel )
+    if(!channelInfo){
+        throw new Error('Channel details could not be parsed')
+    }
+
+
+    body.channel_name = channelInfo.name
+
+    if(text) {            
         const blankPromise = () => new Promise(resolve => resolve())
 
         if(text.indexOf(':face_with_head_bandage:') != -1){
@@ -458,6 +467,41 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
             // show swarming completed
             await say('swarming will be closed.')
         }        
+        
+    }
+
+    if(files && files.length > 0){  
+
+        const caseNumber = getCaseId(body);
+
+        const notesData = {};
+  
+        const attachments = [];
+  
+        for(const f of files){
+          
+          const downloadResponse = await fetch(f.url_private, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` },
+          });
+  
+          const fileBlob = await downloadResponse.blob(); 
+          let buffer = Buffer.from(await fileBlob.arrayBuffer());
+  
+          let attachment = {
+            title: f.title,
+            fileType: f.mimetype,
+            notesFileBase64String: buffer.toString('base64')
+          }
+          
+          attachments.push(attachment);
+        }
+  
+        notesData.attachments = attachments
+  
+        const response = await saveCaseFiles(context.sfconnection, caseNumber, notesData); 
+        
+        console.log('Save files ==> ', response)
     }
 
 }

@@ -602,7 +602,7 @@ module.exports.register = (app) => {
 
     });
 
-    app.acktion('esign_document', async ({ ack }) => {
+    app.action('esign_document', async ({ ack }) => {
         await ack()
     })
 

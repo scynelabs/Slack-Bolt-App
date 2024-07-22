@@ -110,23 +110,15 @@ const authWithSalesforce = async ({
                     token
                 );
 
-
-                try {
-                    userToUserConnection = await userToUserAuth.connect();
-                    connectionCache.set(slackUserId, userToUserConnection);
-                }catch(ex){
-
-                    tokenCache.flushAll();
-                    context.hasAuthorized = false;
-                    throw new Error(ex.message)
-
-                }
-
+                userToUserConnection = await userToUserAuth.connect();
+                connectionCache.set(slackUserId, userToUserConnection);
             }
             context.sfconnection = userToUserConnection;
         }
     } catch (e) {
-        console.error(e);
+        tokenCache.flushAll();
+        context.hasAuthorized = false;
+
         throw new Error(e.message);
     }
     if (next) {

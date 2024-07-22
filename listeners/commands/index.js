@@ -440,7 +440,7 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     body.user_id = payload.user;
     body.channel_id = payload.channel;
 
-    const teamId = payload.team || body.team
+    const teamId = payload.team || body.team_id
 
 
     const channelInfo = await getChanneInfo(client, teamId, payload.channel )

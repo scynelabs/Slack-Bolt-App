@@ -615,7 +615,8 @@ module.exports.register = (app) => {
     })
 
     app.action('start_chat', async ( { ack, context }) => {
-
+        await ack()
+        
         await startSession(context.sfconnection, context);
     })
 

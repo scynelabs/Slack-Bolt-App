@@ -80,6 +80,16 @@ const allCaseActionsView = async (caseNumber) => {
                         "type": "button",
                         "text": {
                             "type": "plain_text",
+                            "text": "🤖 Chatbot",
+                            "emoji": true
+                        },
+                        "value": caseNumber,
+                        "action_id": "start_chat"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
                             "text": "✅ Finish Case Swarm",
                             "emoji": true
                         },

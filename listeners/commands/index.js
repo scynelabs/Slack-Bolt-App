@@ -20,6 +20,12 @@ const {
     authorizeSalesforcePrompt,
 } = require('../../user-interface/modals');
 
+const {
+    startSession,
+    sendMessage,
+    closeSession
+} = require('../../salesforce/einsteinBot')
+
 
 
 const viewCaseDetailsCommand = async ({ ack, say, body, client, logger, context }) => {
@@ -606,6 +612,11 @@ module.exports.register = (app) => {
 
     app.action('esign_document', async ({ ack }) => {
         await ack()
+    })
+
+    app.action('start_chat', async ( { ack, context }) => {
+
+        await startSession(context.sfconnection, context);
     })
 
 };

@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');// uuidv4();
 const axios = require('axios');
 
-const startSession = async (sfConnection => {
+const startSession = async ((sfConnection, context) => {
 
     // Send a POST request
     axios({
@@ -10,7 +10,7 @@ const startSession = async (sfConnection => {
             headers: {
                 'X-Org-Id': process.env.ORG_ID,
                 'X-Request-Id': uuidv4(),
-                'Authorization': `Bearer {{jwt_token}}`,
+                'Authorization': `Bearer ${sfConnection.accessToken}`,
                 'Content-Type': 'application/json'
             },
             data: {
@@ -22,6 +22,8 @@ const startSession = async (sfConnection => {
         }
     ).then( response => {
         console.log('Start session response ==>', response)
+
+        context.bot_sessionId = response.sessionId;
     })
 })
 
@@ -33,7 +35,7 @@ const sendMessage = async ((sfConnection, oauthToken, sessionId, transactionId, 
             headers: {
                 'X-Org-Id': process.env.ORG_ID,
                 'X-Request-Id': uuidv4(),
-                'Authorization': `Bearer ${oauthToken}`,
+                'Authorization': `Bearer ${sfConnection.accessToken}`,
                 'Content-Type': 'application/json'
             },
             data: {
@@ -46,7 +48,7 @@ const sendMessage = async ((sfConnection, oauthToken, sessionId, transactionId, 
             }
         }
     ).then( response => {
-        console.log('Start session response ==>', response)
+        console.log('sendMessage session response ==>', response)
     })
 })
 
@@ -60,7 +62,7 @@ const closeSession = async (sessionId) => {
                 'X-Org-Id': process.env.ORG_ID,
                 'X-Request-Id': uuidv4(),
                 'X-Session-End-Reason': `UserRequest`,
-                'Authorization': `Bearer ${''}`
+                'Authorization': `Bearer ${sfConnection.accessToken}`
             },
             data: {
                 "forceConfig": {
@@ -70,6 +72,12 @@ const closeSession = async (sessionId) => {
             }
         }
     ).then( response => {
-        console.log('Start session response ==>', response)
+        console.log('sendMessage session response ==>', response)
     })    
+}
+
+module.exports = {
+    startSession,
+    sendMessage,
+    closeSession
 }

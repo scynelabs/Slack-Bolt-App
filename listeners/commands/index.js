@@ -434,14 +434,16 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     */
 
     const { text, files } = payload;
-    console.log('message event payload text', text, payload, event)
+    console.log('message event payload text', text, payload, body)
 
 
     body.user_id = payload.user;
     body.channel_id = payload.channel;
 
+    const teamId = payload.team || body.team
 
-    const channelInfo = await getChanneInfo(client, payload.team, payload.channel )
+
+    const channelInfo = await getChanneInfo(client, teamId, payload.channel )
     if(!channelInfo){
         throw new Error('Channel details could not be parsed')
     }

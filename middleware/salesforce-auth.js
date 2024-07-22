@@ -109,8 +109,19 @@ const authWithSalesforce = async ({
                     serverToServerConnection.instanceUrl, // Can we obtain this in a different way?
                     token
                 );
-                userToUserConnection = await userToUserAuth.connect();
-                connectionCache.set(slackUserId, userToUserConnection);
+
+
+                try {
+                    userToUserConnection = await userToUserAuth.connect();
+                    connectionCache.set(slackUserId, userToUserConnection);
+                }catch(ex){
+
+                    tokenCache.flushAll();
+                    context.hasAuthorized = false;
+                    throw new Error(ex.message)
+
+                }
+
             }
             context.sfconnection = userToUserConnection;
         }

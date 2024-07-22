@@ -73,7 +73,7 @@ const allCaseActionsView = async (caseNumber) => {
                             "emoji": true
                         },
                         "value": caseNumber,
-                        "url": "https://urldefense.com/v3/__https:/demo.docusign.net/signing/emails/v2-a225657d9bc9423aa30b1611e4dcc44af659f8ea5d9944569e73ffaff0715a095cfdf76269934d7b8542a4a36710b64e__;!!MpSF8J10V35rovo!7sSy_rWCcw5XYOKPLiRC1E0xs_N0qMfOUY6R0oDa3BdLijvcQ_TTQ6YlePWWUNF9Ejyj5V8uDN3hbdADFvshy_w_QVUUFViq$",
+                        "url": "https://urldefense.com/v3/__https:/demo.docusign.net/signing/emails/v2-a225657d9bc9423aa30b1611e4dcc44a76dc6bc1f12b43118cd1b429aa643c1fb16a1a76e9a64b91b73b46bebf0cc1d6__;!!MpSF8J10V35rovo!89d1WSDG5BhkofdD9_zO4iEbpzGtxxb5ts621FA1ZX9osvlQoj1cYymyBa5m2DR_Kcg1MzDWfAmvNBCSTue4d5BU_pNxG3zi$",
                         "action_id": "esign_document"
                     },
                     {

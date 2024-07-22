@@ -21,9 +21,9 @@ const startSession = async (sfConnection, context) => {
             }
         }
     ).then( response => {
-        console.log('Start session response ==>', response)
+        console.log('Start session response ==>', response.data)
 
-        context.bot_sessionId = response.sessionId;
+        context.bot_sessionId = response.data.sessionId;
     })
 }
 

@@ -419,7 +419,6 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     
     // console.log('body ==>')
     // logger.info(body)
-    console.log('message event payload text', text, payload, event)
     /*
     { user: 'U079T1163ML',
     type: 'message',
@@ -435,6 +434,8 @@ const messageHandler = async ({ ack, client, body, say, event, payload, logger, 
     */
 
     const { text, files } = payload;
+    console.log('message event payload text', text, payload, event)
+
 
     body.user_id = payload.user;
     body.channel_id = payload.channel;

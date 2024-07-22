@@ -120,7 +120,7 @@ const authWithSalesforce = async ({
         tokenCache.flushAll();
         context.hasAuthorized = false;
 
-        throw new Error(e.message);
+        // throw new Error(e.message);
     }
     if (next) {
         // Middleware has been invoked regularly

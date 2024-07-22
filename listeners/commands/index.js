@@ -602,4 +602,8 @@ module.exports.register = (app) => {
 
     });
 
+    app.acktion('esign_document', async ({ ack }) => {
+        await ack()
+    })
+
 };

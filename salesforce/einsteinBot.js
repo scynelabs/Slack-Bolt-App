@@ -3,34 +3,9 @@ const axios = require('axios');
 
 const startSession = async (sfConnection, context) => {
 
-    /*
-    // Send a POST request
-    axios({
-            method: 'post',
-            url: `${process.env.RUNTIME_BASE_URL}/v5.0.0/bots/${process.env.BOT_ID}/sessions`,
-            headers: {
-                'X-Org-Id': process.env.ORG_ID,
-                'X-Request-Id': uuidv4(),
-                'Authorization': `Bearer ${sfConnection.accessToken}`,
-                'Content-Type': 'application/json'
-            },
-            data: {
-                "forceConfig": {
-                    "endpoint": process.env.FORCE_CONFIG_ENDPOINY
-                },
-                "externalSessionKey": uuidv4()
-            }
-        }
-    ).then( response => {
-        console.log('Start session response ==>', response.data)
-
-        context.bot_sessionId = response.data.sessionId;
-    })
-    */
-
     console.log('Starting session...')
 
-    axios.post(`${process.env.RUNTIME_BASE_URL}/v5.0.0/bots/${process.env.BOT_ID}/sessions`, 
+    return axios.post(`${process.env.RUNTIME_BASE_URL}/v5.0.0/bots/${process.env.BOT_ID}/sessions`, 
         {
             "forceConfig": {
                 "endpoint": process.env.FORCE_CONFIG_ENDPOINY
@@ -49,6 +24,7 @@ const startSession = async (sfConnection, context) => {
         console.log('Start session response ==>', response.data)
 
         context.chatbotSessionInfo = response.data;
+        return response.data;
     })
     .catch(function (error) {
         console.log('startSession Error ==>')
@@ -101,6 +77,7 @@ const startSession = async (sfConnection, context) => {
         
     ).then( response => {
         console.log('sendMessage session response ==>', response.data)
+        context.chatbotSessionInfo = response.data;
 
         return response.data
     })

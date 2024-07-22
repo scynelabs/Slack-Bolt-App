@@ -3,6 +3,7 @@ const axios = require('axios');
 
 const startSession = async (sfConnection, context) => {
 
+    /*
     // Send a POST request
     axios({
             method: 'post',
@@ -18,6 +19,28 @@ const startSession = async (sfConnection, context) => {
                     "endpoint": process.env.FORCE_CONFIG_ENDPOINY
                 },
                 "externalSessionKey": uuidv4()
+            }
+        }
+    ).then( response => {
+        console.log('Start session response ==>', response.data)
+
+        context.bot_sessionId = response.data.sessionId;
+    })
+    */
+
+    axios.post(`${process.env.RUNTIME_BASE_URL}/v5.0.0/bots/${process.env.BOT_ID}/sessions`, 
+        {
+            "forceConfig": {
+                "endpoint": process.env.FORCE_CONFIG_ENDPOINY
+            },
+            "externalSessionKey": uuidv4()
+        }, 
+        {
+            headers: {
+                'X-Org-Id': process.env.ORG_ID,
+                'X-Request-Id': uuidv4(),
+                'Authorization': `Bearer ${sfConnection.accessToken}`,
+                'Content-Type': 'application/json'
             }
         }
     ).then( response => {

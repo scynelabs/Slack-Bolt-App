@@ -116,6 +116,7 @@ const authWithSalesforce = async ({
             context.sfconnection = userToUserConnection;
         }
     } catch (e) {
+        console.log('authWithSalesforce Error, flusing cache ==>', e.message);
         tokenCache.flushAll();
         context.hasAuthorized = false;
 
